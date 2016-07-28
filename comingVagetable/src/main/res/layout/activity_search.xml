@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white" >
+
+        <EditText
+            android:id="@+id/et_search_key"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="80dp"
+            android:background="@drawable/search_round_corner_bg"
+            android:hint="输入关键字"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColorHint="@color/mark_black"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:adjustViewBounds="true"
+            android:padding="8dp"
+            android:src="@drawable/iv_back_arrow" />
+
+        <Button
+            android:id="@+id/bt_search"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+         
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="搜索"   
+            android:background="@drawable/round_corner_button_green_bg"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/mark_black" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/mark_black" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <LinearLayout
+            android:id="@+id/panel_hot_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="热门搜索："
+                android:textColor="@color/des_black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_qc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/gray_borad_bg"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="青菜"
+                android:textColor="@color/des_black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_zr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/gray_borad_bg"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="肉"
+                android:textColor="@color/des_black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/gray_borad_bg"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="鱼"
+                android:textColor="@color/des_black"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/mark_black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/mark_black" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ListView
+            android:id="@+id/lv_search_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_null_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:text="没有搜索到相应的结果"
+            android:gravity="center_horizontal"
+            android:paddingTop="20dp"
+            android:textColor="@color/mark_black" />
+        <LinearLayout
+            android:id="@+id/ll_panel_searching"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            
+            <ProgressBar 
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+ 
+            </ProgressBar>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="搜索中..."/>
+		</LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

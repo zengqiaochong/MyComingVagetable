@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:gravity="center_vertical"
+    >
+    
+	<ImageView
+	    android:id="@+id/iv_progress_start"
+	    android:layout_width="30dp"
+	    android:layout_height="30dp"
+	    android:adjustViewBounds="true"
+	    android:scaleType="fitXY"
+	    android:src="@drawable/iv_logistic_start" 
+	    android:layout_marginLeft="20dp"
+	    />
+	<ImageView
+	    android:id="@+id/iv_progressing"
+	    android:layout_width="30dp"
+	    android:layout_height="30dp"
+	    android:adjustViewBounds="true"
+	    android:scaleType="fitXY"
+	    android:src="@drawable/iv_progressing" 
+	    android:layout_marginLeft="20dp"
+	    android:visibility="gone"
+	    
+	    />
+	<LinearLayout
+	    android:orientation="vertical"
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:layout_marginLeft="20dp"
+	    android:layout_marginTop="10dp"
+	    android:layout_marginBottom="10dp"
+	    >
+	    <TextView
+	        android:id="@+id/tv_logistic_des"
+	        android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+		    android:layout_marginRight="20dp"
+	        android:text="正在打包"
+	        android:textColor="@color/title_black"
+	        />
+	    <TextView
+	        android:id="@+id/tv_logistic_time"
+	        android:layout_marginTop="5dp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:singleLine="true"
+	        android:layout_marginRight="20dp"
+	        android:text="2000-01-01 12:09:21"
+	        android:textSize="8sp"
+	        android:textColor="@color/des_black"
+	        />
+	    </LinearLayout>
+</LinearLayout>

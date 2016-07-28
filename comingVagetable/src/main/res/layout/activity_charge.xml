@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white" >
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
+            android:src="@drawable/iv_back" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/title_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="充值余额" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_black" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/panel_des"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/button_blue" >
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="充值余额，享受更多优惠"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_select_charge_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="选择充值金额（元）"
+            android:textColor="@color/mark_black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/bt_charge_10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/gray_borad_bg"
+                android:padding="5dp"
+                android:text="10 元"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/bt_charge_20"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/gray_borad_bg"
+                android:padding="5dp"
+                android:text="20 元"
+                android:textColor="@color/des_black" />
+
+            <Button
+                android:id="@+id/bt_charge_50"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/gray_borad_bg"
+                android:padding="5dp"
+                android:text="50 元"
+                android:textColor="@color/des_black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/bt_charge_100"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/gray_borad_bg"
+                android:padding="5dp"
+                android:text="100 元"
+                android:textColor="@color/des_black" />
+
+            <Button
+                android:id="@+id/bt_charge_200"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/gray_borad_bg"
+                android:padding="5dp"
+                android:text="200 元"
+                android:textColor="@color/des_black" />
+
+            <EditText
+                android:id="@+id/et_charge_other"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/gray_borad_bg"
+                android:hint="输入金额"
+                android:numeric="integer"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textColor="@color/des_black" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/gray_bg" />
+	<TextView
+	    android:text="选择支付方式"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:textColor="@color/des_black"
+	    android:layout_marginLeft="10dp"
+	    android:textSize="14sp"
+	    />
+    <RadioGroup
+        android:id="@+id/rg_pay_way"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp" >
+
+        <RadioButton 
+            android:id="@+id/rb_alipay"
+            android:text="支付宝" 
+            android:textColor="@color/des_black"
+            android:checked="true"/>
+
+        <RadioButton 
+            android:id="@+id/rb_wxpay"
+            android:text="微信" 
+            android:textColor="@color/des_black"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/bt_charge_now"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/choose_done_bg"
+        android:padding="5dp" 
+        android:textColor="@color/white"
+        android:text="确认支付"/>
+
+</LinearLayout>

@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_slide"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:adjustViewBounds="true"
+            android:paddingBottom="5dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/iv_back_arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="商品详情"
+            android:textColor="@color/gray_light"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_slice" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_panel_bottom_banner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/cart_bar_bg">
+
+        <Button
+            android:id="@+id/bt_choose_done"
+            style="@style/white_text"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_bg"
+            android:gravity="center"
+            android:text="@string/add_to_cart"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_panel_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="80dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="总价格："
+                    android:textColor="@color/black_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥"
+                    android:textColor="@color/orange"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tv_total_money_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/orange"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_total_money_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=".0"
+                    android:textColor="@color/orange"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="总体积："
+                    android:textColor="@color/black_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_total_volume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0L"
+                    android:textColor="@color/black_light"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="另需：¥"
+                    android:textColor="@color/black_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_deliver_fees"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3.00"
+                    android:textColor="@color/black_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_freight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="配送费"
+                    android:textColor="@color/black_light"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rl_panel_bottom_banner"
+        android:layout_below="@id/rl_title_bar"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.minking.imagecycleview.ImageCycleView
+                android:id="@+id/iv_product_pics"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_product_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="@string/none"
+                        android:textColor="@color/gray_light"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/tv_volume"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="5dp">
+
+                    <TextView
+                        android:id="@+id/tv_provide_channel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="供应渠道：基地供应"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/tv_process_way"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="菜品加工：默认"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_onsell_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="@string/none"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/product_detail_explain"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0"
+                        android:drawableRight="@drawable/go_next"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="25dp"
+                        android:text="商品销售说明"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/product_detail_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0"
+                        android:drawableRight="@drawable/go_next"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="25dp"
+                        android:text="商品小贴士"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:gravity="right"
+                        android:text="商品等级"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.4"
+                        android:gravity="center"
+                        android:text="库存"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.2"
+                        android:gravity="center"
+                        android:text="价格"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.4"
+                        android:gravity="center"
+                        android:text="份量"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/product_detail_grade0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:visibility="gone"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_product_grade"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:text="有机"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/tv_product_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.4"
+                        android:gravity="center"
+                        android:text="68份(已售:168份)"
+                        android:singleLine="true"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="12dp" />
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_item_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.2"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_money_big"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textColor="@color/orange"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/tv_money_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=".98"
+                            android:textColor="@color/orange"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/tv_money_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:text="元/份"
+                            android:textColor="@color/orange"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_weight="1.4"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.caomei.comingvagetable.view.CircleButton
+                            android:id="@+id/iv_count_minus"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/item_widget_alpha_minus"
+                            app:cb_color="@color/button_blue" />
+
+                        <TextView
+                            android:id="@+id/tv_count_buy"
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:text="0"
+                            android:textColor="@color/money_yellow"
+                            android:textSize="20dp" />
+
+                        <com.caomei.comingvagetable.view.CircleButton
+                            android:id="@+id/iv_count_plus"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/item_widget_alpha_add"
+                            app:cb_color="@color/button_blue" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="#aaaaaa" />
+
+                <LinearLayout
+                    android:id="@+id/product_detail_grade1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:visibility="gone"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_product_grade1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:text="优选"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/tv_product_number1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.4"
+                        android:gravity="center"
+                        android:text="68份(已售:168份)"
+                        android:singleLine="true"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="12dp" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_item_price1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.2"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_money_big1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textColor="@color/orange"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/tv_money_small1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=".98"
+                            android:textColor="@color/orange"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/tv_money_unit1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:text="元/份"
+                            android:textColor="@color/orange"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_weight="1.4"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.caomei.comingvagetable.view.CircleButton
+                            android:id="@+id/iv_count_minus1"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/item_widget_alpha_minus"
+                            app:cb_color="@color/button_blue" />
+
+                        <TextView
+                            android:id="@+id/tv_count_buy1"
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:text="0"
+                            android:textColor="@color/money_yellow"
+                            android:textSize="20dp" />
+
+                        <com.caomei.comingvagetable.view.CircleButton
+                            android:id="@+id/iv_count_plus1"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/item_widget_alpha_add"
+                            app:cb_color="@color/button_blue" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="#aaaaaa" />
+
+                <LinearLayout
+                    android:id="@+id/product_detail_grade2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:visibility="gone"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_product_grade2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:text="一级"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/tv_product_number2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.4"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="68份(已售:168份)"
+                        android:textColor="@color/onsell_time_color"
+                        android:textSize="12dp" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_item_price2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.2"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_money_big2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textColor="@color/orange"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/tv_money_small2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=".98"
+                            android:textColor="@color/orange"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/tv_money_unit2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:text="元/份"
+                            android:textColor="@color/orange"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_weight="1.4"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.caomei.comingvagetable.view.CircleButton
+                            android:id="@+id/iv_count_minus2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/item_widget_alpha_minus"
+                            app:cb_color="@color/button_blue" />
+
+                        <TextView
+                            android:id="@+id/tv_count_buy2"
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:text="0"
+                            android:textColor="@color/money_yellow"
+                            android:textSize="20dp" />
+
+                        <com.caomei.comingvagetable.view.CircleButton
+                            android:id="@+id/iv_count_plus2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/item_widget_alpha_add"
+                            app:cb_color="@color/button_blue" />
+                    </LinearLayout>
+                </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#ffffff"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/panel_cart"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/cart_round_bg">
+
+        <ImageView
+            android:id="@+id/rbiv_cart"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/iv_cart_white" />
+
+        <com.caomei.comingvagetable.controls.ColorTextView
+            android:id="@+id/ct_goods_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:text="0"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

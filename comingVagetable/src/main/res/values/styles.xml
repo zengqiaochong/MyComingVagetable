@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="title_style" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textColor">#414141</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="item_des_style" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textColor">#878787</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+</resources>

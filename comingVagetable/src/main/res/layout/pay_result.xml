@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+     <RelativeLayout
+        android:id="@+id/top_banner"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/button_blue" >
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:adjustViewBounds="true"
+            android:padding="8dp"
+            android:tint="@color/white"
+            android:src="@drawable/iv_back_arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="支付状态"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+     
+    
+	<TextView
+	    android:id="@+id/tv_notice"
+	    android:layout_width="fill_parent" 
+	 	android:layout_height="0dp"  
+	 	android:layout_weight="1"
+		android:layout_gravity="center"
+		android:gravity="center"
+	 	android:textColor="#ff000000"
+	 	android:textSize="20dp"
+	 	android:layout_marginTop="50dp"
+	 	android:text=""
+	 	/>
+	
+</LinearLayout>

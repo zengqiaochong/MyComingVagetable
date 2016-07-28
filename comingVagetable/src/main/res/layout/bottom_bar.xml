@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_page_tab_bg_color"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/v_home"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/iv_home"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/iv_home_active" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/v_cart"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.caomei.comingvagetable.controls.ColorTextView
+                android:id="@+id/ct_goods_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:padding="2dp"
+                android:text="0"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/iv_cart"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/iv_cart" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/v_order"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/iv_order"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/iv_sign" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/v_fans"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/iv_fans"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/iv_fans" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/v_user_center"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/iv_user_center"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/iv_user" />
+    </LinearLayout>
+
+</LinearLayout>

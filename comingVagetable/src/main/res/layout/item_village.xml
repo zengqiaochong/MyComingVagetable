@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_panel_village"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg"
+    android:orientation="horizontal" >
+
+    <View
+        android:id="@+id/v_indicator"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:background="@color/button_blue"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_village"
+        android:layout_width="0dp"
+    	android:layout_height="60dp"
+        android:layout_weight="1"
+        android:gravity="center" 
+        android:text="沙坪坝"
+        android:textColor="@color/des_black"
+        android:textSize="16sp" />
+
+    <View
+        android:id="@+id/v_board"
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/mark_black"
+        android:visibility="gone" />
+
+</LinearLayout>

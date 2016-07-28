@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">菜來了</string>
+
+    <!--<string name="app_name">ComingVagetable</string>-->
+    <string name="online_config">OnlineConfig</string>
+    <string name="make_crash">Make me crash!!</string>
+    <string name="kv_event">K-V Event</string>
+    <string name="normal_event">Event</string>
+    <string name="event_begin">Event Begin</string>
+    <string name="event_end">Event End</string>
+    <string name="event_duration">Value-Type</string>
+    <string name="page_stack">Page in Fragment Stack</string>
+    <string name="page_tabs">Page in Fragment Tabs</string>
+    <string name="social_analytics">Social Analytics</string>
+    <string name="js_in_webview">JS Analytics in Webivew</string>
+    <string name="flush_cache">send cache message ,right now !</string>
+    <string name="signin">signin</string>
+    <string name="signoff">signoff</string>
+    <string name="locate_village">点击定位</string>
+    <string name="search">搜索</string>
+	<string name="product_detail">蔬菜，是指可以做菜、烹饪成为食品的一类植物或菌类，蔬菜是人们日常饮食中必不可少的食物之一，是一种绿色食品。蔬菜可提供人体所必需的多种维生素和矿物质等营养物质。此外，蔬菜中还有多种多样的植物化学物质，是人们公认的对健康有效的成分，目前果蔬中的营养素可以有效预防慢性、退行性疾病的多种物质，正在被人们研究发现。</string>
+	<string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
+	<string name="add_to_cart">加入购物车</string>
+	<string name="choose_done">选好了</string>
+	<string name="GoBuy">马上结算</string>
+	<string name="GoPay">马上付款</string>
+	<string name="none">暂无</string>
+	<string name="input_your_cell_phone_number">输入手机号码</string>
+	<string name="code_hint_text">输入登录密码</string>
+	<string name="get_address_list_error">获取收货地址失败</string>
+	<string name="loading">加载中...</string>
+	<string name="not_add_address_yet">还没有添加收货地址</string>
+	<string name="request_address_failed">请求收货地址信息失败</string>
+	<string name="request_data_failed">获取数据失败</string>
+	<string name="add_address_failed">添加地址失败。</string>
+	<string name="update_address_failed">修改地址失败。</string>
+	<string name="please_complete_your_personal_info">收货信息格式有误</string>
+	<string name="cart_data_get_failed">购物车数据获取失败</string>
+	<string name="my_address">我的地址</string>
+	<string name="my_sign">签收</string>
+	
+	<string name="init_data_failed">初始化数据失败</string>
+	<string name="vege_all">全部</string>
+	<string name="locate_failed">定位失败</string>
+	<string name="get_data_error_format">获取到的数据格式有误</string>
+	<string name="request_failed">网络出错</string>
+	<string name="input_detail_address">请输入详细地址</string>
+	<string name="add_address">添加地址</string>
+	<string name="input_user_address">请输入收货人姓名</string>
+	<string name="input_user_phone_number">请输入收货人联系电话</string>
+	<string name="save">保存</string>
+	<string name="del_address_request_failed">删除请求失败</string>
+
+	<item type="id" name="tag_first"></item>
+	<item type="id" name="tag_second"></item>
+	<string name="dialog_confirm">确认</string>
+	<string name="comfirm">确认</string>
+	<string name="cancel">取消</string>
+	<string name="cv_tips">http://zmbok.com/tips.html</string>
+
+	<string name="product_detail_explain">重量误差\   色相：100\%   精选率\>95\%</string>
+</resources>

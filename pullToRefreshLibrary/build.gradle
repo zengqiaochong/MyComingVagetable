@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        minSdkVersion 13
+        targetSdkVersion 19
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            jniDebuggable true
+            zipAlignEnabled true
+            minifyEnabled false
+            shrinkResources false
+            /*signingConfig signingConfigs.myConfig*/
+        }
+        release {
+            debuggable false
+            jniDebuggable false
+            zipAlignEnabled true
+            minifyEnabled false
+            shrinkResources true
+            /*signingConfig signingConfigs.myConfig*/
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    /*compile 'com.android.support:support-v4:19.1.0'*/
+    compile 'com.android.support:support-v4:24.0.0'
+}

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" 
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp" >
+
+    <LinearLayout
+        android:id="@+id/ll_addr_panel"
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp" 
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/iv_cell_phone" />
+
+            <TextView
+                android:id="@+id/tv_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="15823058076"
+                android:textColor="@color/black_light" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/iv_address"
+                 />
+
+            <TextView
+                android:id="@+id/tv_detail_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="重庆大学"
+                android:textColor="@color/black_light" />
+        </LinearLayout>
+    </LinearLayout>
+
+    
+    <CheckBox 
+            android:id="@+id/cb_default_addr"
+	        android:layout_width="0dp"
+	        style="@style/MyCheckBox"
+	        android:layout_weight="1.5"
+            android:layout_height="15dp"
+            android:textColor="@color/black_light"
+            android:textSize="12sp"
+            android:text="默认"/>
+    <ImageView
+        android:id="@+id/iv_edit_addr"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:minWidth="30dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/iv_edit_address"/>
+    <ImageView
+        android:id="@+id/iv_del_addr"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:src="@drawable/iv_del_yellow"/>
+    
+</LinearLayout>
