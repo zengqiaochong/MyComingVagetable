@@ -31,6 +31,7 @@ import com.caomei.comingvagetable.bean.order.SignList;
 import com.caomei.comingvagetable.util.DialogUtil;
 import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
+import com.caomei.comingvagetable.util.ToastUtil;
 import com.google.gson.Gson;
 
 import de.greenrobot.event.EventBus;
@@ -133,6 +134,7 @@ public class FragmentToSign extends BaseFragment {
 					Toast.LENGTH_SHORT).show();
 			break;
 		case OpCodes.SUBMIT_SIGN_DONE:
+			ToastUtil.Show(mContext, "签收成功");
 		case OpCodes.EVALUATE_ORDER_DONE:
 		case OpCodes.GET_ORDER_BY_TIME:
 			requestSignData(FragmentOrder.orderTimeType);
@@ -198,6 +200,7 @@ public class FragmentToSign extends BaseFragment {
 		final String url = CommonAPI.BASE_URL
 				+ String.format(CommonAPI.URL_UPDATE_ORDER_STATUS, id, "4",
 						ShareUtil.getInstance(mContext).getUserId());
+		Log.e("url","菜品签收接口："+url);
 		new Thread(new Runnable() {
 
 			@Override

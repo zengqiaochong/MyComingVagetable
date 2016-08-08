@@ -45,5 +45,8 @@
     
      <color name="result_view">#b0000000</color>
       <color name="viewfinder_mask">#60000000</color>
-      <color name="possible_result_points">#c0ffff00</color> 
+      <color name="possible_result_points">#c0ffff00</color>
+
+    <color name="green">#4dc060</color>
+    <color name="Dark_green">#4dc060</color>
 </resources>

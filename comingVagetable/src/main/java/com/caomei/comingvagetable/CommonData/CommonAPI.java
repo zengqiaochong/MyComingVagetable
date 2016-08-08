@@ -95,7 +95,7 @@ public class CommonAPI {
 	/**
 	 * 用户注册接口 1 username 2 password
 	 */
-	public static String URL_REGIST = "Reg_createGuest?username=%s&password=%s&user_id=-1";
+	public static String URL_REGIST = "Reg_createGuest?username=%s&password=%s&user_id=-1&code=%s";
 
 	/**
 	 * 用户登录接口 1 username 2 password
@@ -412,4 +412,10 @@ public class CommonAPI {
 	
 	
 	public static String URL_PICTURE_UPLOAD="Picture_setUserPhoto";
+
+	/*
+    *找回密码接口
+    *
+    * */
+	public static String URL_BACK_PASSWORD = "User_retrievePasswordForApp?password=%s&user_id=%s&phone=%s&roleType=6";
 }

@@ -70,6 +70,7 @@ public class OrderConfirm extends BaseActivity {
 	private String int_way = "1";//选中的配送方式，0表示门口取件，1表示送货上门，2表示小区提货
 	private TextView tv_address;//收货地址
 	private TextView order_note;//没有门店（小区管家）的情况下给出提示
+	private TextView order_remarks;//备注
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,7 @@ public class OrderConfirm extends BaseActivity {
 	}
 
 	private void initView() {
+		order_remarks = (TextView) findViewById(R.id.order_remarks);
 		order_note = (TextView) findViewById(R.id.order_note);
 		tv_address = (TextView) findViewById(R.id.tv_address);
 		tv_note = (TextView) findViewById(R.id.tv_note);
@@ -151,7 +153,6 @@ public class OrderConfirm extends BaseActivity {
 					tv_note.setText("温馨提示：请您与" + tom_date + "  时间：8：00-11：00" + str + "取货；超时取货可能造成冷藏失效，导致您的生鲜产品变质；谢谢您的惠顾！");
 					tvDeliverFee.setText("5");
 					ShareUtil.getInstance(mContext).setDeliverFee("5");
-					setMendianRadiogroup("2");
 					break;
 				case R.id.order_take_of_door:
 					way = "门口取件";
@@ -159,7 +160,6 @@ public class OrderConfirm extends BaseActivity {
 					tv_note.setText("温馨提示：请您与" + tom_date + "  时间：10点之前在家门口取货；10点之后业务员将回收冷藏箱；谢谢您的惠顾！");
 					tvDeliverFee.setText("8");
 					ShareUtil.getInstance(mContext).setDeliverFee("7");
-					setMendianRadiogroup("0");
 					break;
 				case R.id.order_provide_home:
 					way = "送货上门";
@@ -167,9 +167,9 @@ public class OrderConfirm extends BaseActivity {
 					tv_note.setText("温馨提示：" + tom_date + "  时间：8：00-11：00送货上门；请您确保家中有人取货；谢谢您的惠顾！");
 					tvDeliverFee.setText("7");
 					ShareUtil.getInstance(mContext).setDeliverFee("5");
-					setMendianRadiogroup("1");
 					break;
 			}
+			setMendianRadiogroup(int_way);
 			if(tv_pay_way != null){
 				tv_pay_way.setText("配送方式：" + way);
 			}
@@ -349,7 +349,7 @@ public class OrderConfirm extends BaseActivity {
 					((RadioButton)(rg_order.getChildAt(0))).setChecked(true);
 				}*/
 				setMendianData();
-				setMendianRadiogroup("1");
+				setMendianRadiogroup(int_way);
 				break;
 			case OpCodes.REQUEST_COMPANY_NAME_NULL:
 				order_groups.setVisibility(View.GONE);
@@ -402,7 +402,12 @@ public class OrderConfirm extends BaseActivity {
 				((RadioButton) (rg_order1.getChildAt(0))).setChecked(true);
 			}else{
 				order_provide_home.setChecked(false);
-				order_take_of_quarters.setChecked(true);
+				if(rg_order2.getChildCount() > 0){
+					order_take_of_quarters.setChecked(true);
+					int_way = "2";
+				}else{
+					int_way = "0";
+				}
 				order_provide_home.setVisibility(View.GONE);
 			}
 			if( rg_order2.getChildCount() > 0) {
@@ -551,7 +556,7 @@ public class OrderConfirm extends BaseActivity {
 							+ String.format(
 									CommonAPI.URL_SUBMIT_ORDER_FROM_CART,
 									ShareUtil.getInstance(mContext).getUserId(),
-									addr.getAddress_id(), "test",
+									addr.getAddress_id(), order_remarks.getEditableText().toString(),
 									bean.getCartIds(),
 									ShareUtil.getInstance(mContext).getUserId(),
 							delive_id,

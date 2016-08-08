@@ -82,8 +82,8 @@ public class LoginActivity extends BaseActivity {
 						R.anim.activity_slide_left_out, false, null);
 				break;
 			case R.id.tv_forget_pwd:
-
-				Toast.makeText(mContext, "暂无此功能", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(mContext, "暂无此功能", Toast.LENGTH_SHORT).show();
+				startNewActivity(Forgetpassword.class, R.anim.activity_slide_right_in, R.anim.activity_slide_left_out, true, null);
 				break;
 			case R.id.bt_login:
 				pDialog.show();

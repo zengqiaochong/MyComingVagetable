@@ -155,6 +155,7 @@ public class FragmentOrder extends BaseFragment {
 		ivCursor.setLayoutParams(lp);
 	}
 
+	private int time_id;
 	class CommonListener implements OnPageChangeListener, OnClickListener {
 
 		@Override
@@ -176,7 +177,10 @@ public class FragmentOrder extends BaseFragment {
 			case R.id.ll_panel_order_time:
 				if (pWindow != null && pWindow.isShowing()) {
 					pWindow.dismiss();
-				} else {
+				} else if(pWindow != null && !pWindow.isShowing()) {
+					pWindow.showAsDropDown(
+							view.findViewById(R.id.ll_panel_order_time), 0, 50);
+				}else{
 					IntialPopupWindow();
 					pWindow.showAsDropDown(
 							view.findViewById(R.id.ll_panel_order_time), 0, 50);
@@ -198,7 +202,20 @@ public class FragmentOrder extends BaseFragment {
 					pWindow.dismiss();
 				}
 				orderTimeType = time;
-//				tvOrderTime.setText(((TextView)v.findViewById(R.id.tv_time_str)).getText());
+				if(time == 1){
+					time_id = R.id.tv_time_str;
+				}else if(time == 2){
+					time_id = R.id.tv_time_str2;
+				}else if(time == 3){
+					time_id = R.id.tv_time_str3;
+				}else if(time == 4){
+					time_id = R.id.tv_time_str4;
+				}else if(time == 5){
+					time_id = R.id.tv_time_str5;
+				}else{
+					time_id = R.id.tv_time_str6;
+				}
+				tvOrderTime.setText(((TextView)menu.findViewById(time_id)).getText());
 				EventBus.getDefault().post(new EventMsg(OpCodes.GET_ORDER_BY_TIME, orderTimeType));
 				break;
 			default:
@@ -283,8 +300,9 @@ public class FragmentOrder extends BaseFragment {
 		}
 	}
 
+	private View menu;
 	private void IntialPopupWindow() {
-		View menu = ((MainActivity) mContext).getLayoutInflater().inflate(
+		menu = ((MainActivity) mContext).getLayoutInflater().inflate(
 				R.layout.order_time_list, null, false);
 		pWindow = new PopupWindow(menu, (int) AppUtil.dpToPixel(mContext, 110),
 				(int) AppUtil.dpToPixel(mContext, 220));
@@ -296,7 +314,7 @@ public class FragmentOrder extends BaseFragment {
 			public boolean onTouch(View arg0, MotionEvent arg1) {
 				if (pWindow != null && pWindow.isShowing()) {
 					pWindow.dismiss();
-					pWindow = null;
+					//pWindow = null;
 				}
 				return false;
 			}

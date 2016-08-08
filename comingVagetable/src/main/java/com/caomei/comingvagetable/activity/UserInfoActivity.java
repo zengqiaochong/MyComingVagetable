@@ -218,8 +218,8 @@ public class UserInfoActivity extends BaseActivity {
 				onBackPressed();
 				break;
 			case R.id.rl_panel_user_head:
-//				未完成
-//				ShowDialog();  
+				//未完成
+				ShowDialog();
 				break;
 			default:
 				break;
@@ -277,56 +277,48 @@ public class UserInfoActivity extends BaseActivity {
 
 	private Bitmap head;// 头像Bitmap
 	private Uri photoUri;
-	private Runnable uploadImageRunnable = new Runnable() {
+	private void uploadImage(){
+		try {
+			AsyncHttpClient client = new AsyncHttpClient();
+			RequestParams params = new RequestParams();
+			params.put("user_id", ShareUtil.getInstance(mContext)
+					.getUserId());
+			File file = new File(path);
+			params.put("file", file);
+			params.put("fileFileName", "head.jpg");
+			params.put(
+					"fileContentType",
+					MimeTypeMap
+							.getSingleton()
+							.getMimeTypeFromExtension(
+									MimeTypeMap
+											.getFileExtensionFromUrl(CommonAPI.BASE_URL
+													+ CommonAPI.URL_PICTURE_UPLOAD)));
+			client.post(CommonAPI.BASE_URL + CommonAPI.URL_PICTURE_UPLOAD,
+					params, new AsyncHttpResponseHandler() {
 
-		@Override
-		public void run() {
-			try {
+						@Override
+						public void onFailure(int arg0, Header[] arg1,
+											  byte[] arg2, Throwable arg3) {
+							Log.e("data", "dta  fa " + arg3.toString());
+						}
 
-				AsyncHttpClient client = new AsyncHttpClient();
-				RequestParams params = new RequestParams();
-				params.put("user_id", ShareUtil.getInstance(mContext)
-						.getUserId());
-				File file = new File(path);
-				params.put("file", file);
-				params.put("fileFileName", "head.jpg");
-				params.put(
-						"fileContentType",
-						MimeTypeMap
-								.getSingleton()
-								.getMimeTypeFromExtension(
-										MimeTypeMap
-												.getFileExtensionFromUrl(CommonAPI.BASE_URL
-														+ CommonAPI.URL_PICTURE_UPLOAD)));
-			         	client.post(CommonAPI.BASE_URL + CommonAPI.URL_PICTURE_UPLOAD,
-						params, new AsyncHttpResponseHandler() {
+						@Override
+						public void onSuccess(int arg0, Header[] arg1,
+											  byte[] arg2) {
+							Log.e("data", "dta   " + arg2.toString());
 
-							@Override
-							public void onFailure(int arg0, Header[] arg1,
-									byte[] arg2, Throwable arg3) {
-								Log.e("data", "dta  fa " + arg3.toString());
-							}
+						}
+					});
 
-							@Override
-							public void onSuccess(int arg0, Header[] arg1,
-									byte[] arg2) {
-								Log.e("data", "dta   " + arg2.toString());
-
-							}
-						});
-
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	};
+	}
 	private Uri uritempFile;
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-		Toast.makeText(mContext, "reuslt code " + resultCode, Toast.LENGTH_LONG)
-				.show();
 		switch (requestCode) {
 		case 1:
 			if (resultCode == RESULT_OK) {
@@ -352,7 +344,8 @@ public class UserInfoActivity extends BaseActivity {
 				/**
 				 * 上传服务器代码
 				 */
-				new Thread(uploadImageRunnable).start();
+				uploadImage();
+				//new Thread(uploadImageRunnable).start();
 
 			} else {
 				ToastUtil.Show(mContext, "设置头像出错");

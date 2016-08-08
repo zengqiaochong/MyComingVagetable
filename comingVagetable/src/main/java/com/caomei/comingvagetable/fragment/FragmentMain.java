@@ -121,9 +121,12 @@ public class FragmentMain extends Fragment {
 		gridDataset = new ArrayList<VegeAllBeanData>();
 		picUrls = new ArrayList<String>();
 		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner.jpg");
-		picUrls.add("http://b.picphotos.baidu.com/album/s%3D1600%3Bq%3D90/sign=b7903557082442a7aa0ef9a3e173963a/cb8065380cd79123be1c9ba0aa345982b3b78061.jpg");
-		picUrls.add("http://f.picphotos.baidu.com/album/s%3D1600%3Bq%3D90/sign=c4abb0f7642762d0843ea0b990dc338b/810a19d8bc3eb1355ebdb86fa11ea8d3fc1f44ef.jpg");
-		picUrls.add("http://g.picphotos.baidu.com/album/s%3D1600%3Bq%3D90/sign=64a541100dd162d981ee661a21ef929d/9358d109b3de9c82b7f5f65b6b81800a18d84355.jpg");
+		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner1.jpg");
+		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner2.jpg");
+		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner3.jpg");
+		//picUrls.add("http://b.picphotos.baidu.com/album/s%3D1600%3Bq%3D90/sign=b7903557082442a7aa0ef9a3e173963a/cb8065380cd79123be1c9ba0aa345982b3b78061.jpg");
+		//picUrls.add("http://f.picphotos.baidu.com/album/s%3D1600%3Bq%3D90/sign=c4abb0f7642762d0843ea0b990dc338b/810a19d8bc3eb1355ebdb86fa11ea8d3fc1f44ef.jpg");
+		//picUrls.add("http://g.picphotos.baidu.com/album/s%3D1600%3Bq%3D90/sign=64a541100dd162d981ee661a21ef929d/9358d109b3de9c82b7f5f65b6b81800a18d84355.jpg");
 		//picUrls.add("http://c.picphotos.baidu.com/album/s%3D1600%3Bq%3D90/sign=7acc410853e736d15c13880eab6074b3/cefc1e178a82b9018852cce7748da9773812ef63.jpg");
 
 	}

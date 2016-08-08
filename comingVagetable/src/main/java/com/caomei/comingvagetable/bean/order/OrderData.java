@@ -8,9 +8,6 @@ import android.text.TextUtils;
 import com.caomei.comingvagetable.bean.AddressData;
 
 public class OrderData implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8275789382653707399L;
 	private String order_id;
 	private String orderNO;

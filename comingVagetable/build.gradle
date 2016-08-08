@@ -8,8 +8,8 @@ android {
         applicationId "com.caomei.comingvagetable"
         minSdkVersion 13
         targetSdkVersion 19
-        versionCode 116
-        versionName "1.1.6"
+        versionCode 118
+        versionName "1.1.8"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
@@ -66,5 +66,5 @@ dependencies {
         compile files('libs/universal-image-loader-1.9.4-with-sources.jar')
         compile files('libs/wup-1.0.0.E-SNAPSHOT.jar')
         compile files('libs/zxing.jar')*/
-    compile files('libs/jg_filter_sdk_1.1.jar')
+    //compile files('libs/jg_filter_sdk_1.1.jar')
 }

@@ -279,6 +279,54 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/mark_black" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="69dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp" >
+
+            <ImageView
+                android:id="@+id/iv_codes2"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/iv_pwd" />
+
+            <TextView
+                android:id="@+id/tv_code_numbers2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/iv_codes2"
+                android:singleLine="true"
+                android:text="推荐码："
+                android:textColor="@color/des_black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_recommend_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/et_phone_number_bg"
+                android:hint="可不填，填写推荐码有奖"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/des_black"
+                android:textColorHint="@color/hint_text_color"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/mark_black" />
     </LinearLayout>
 
     <Button

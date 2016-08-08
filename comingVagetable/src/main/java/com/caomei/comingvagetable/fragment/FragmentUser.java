@@ -115,6 +115,11 @@ public class FragmentUser extends Fragment {
 		panelContact.setOnClickListener(mListener);
 		panelMoney.setOnClickListener(mListener);
 		panelSetting.setOnClickListener(mListener);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
 		requestUserInfo();
 	}
 

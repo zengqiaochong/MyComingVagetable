@@ -42,6 +42,7 @@ public class RegistActivity extends BaseActivity {
 	private myTimerTask myTask;
 	private TextView tvContact;
 	private CheckBox cbAgree;
+	private EditText et_recommend_confirm;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class RegistActivity extends BaseActivity {
 	}
 
 	private void setView() {
+		et_recommend_confirm = (EditText) findViewById(R.id.et_recommend_confirm);
 		ivBack=(ImageView)findViewById(R.id.iv_back);
 		etPhoneNum = (EditText) findViewById(R.id.et_phone_number);
 		etCode = (EditText) findViewById(R.id.et_code_number);
@@ -241,7 +243,7 @@ public class RegistActivity extends BaseActivity {
 		String uName = etPhoneNum.getEditableText().toString();
 		String pwd = etPwd.getEditableText().toString();
 		final String url = CommonAPI.BASE_URL
-				+ String.format(CommonAPI.URL_REGIST, uName, pwd);
+				+ String.format(CommonAPI.URL_REGIST, uName, pwd, et_recommend_confirm.getEditableText().toString());
 
 		System.out.println("url========" + url);
 		new Thread(new Runnable() {

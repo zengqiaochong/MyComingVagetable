@@ -148,8 +148,8 @@ public class GiftOrderActivity extends BaseActivity {
 		ivCursor.setLayoutParams(lp);
 	}
 
+	private int time_id;
 	class CommonListener implements ViewPager.OnPageChangeListener, OnClickListener {
-
 		@Override
 		public void onClick(View v) {
 			int time=0;
@@ -172,13 +172,15 @@ public class GiftOrderActivity extends BaseActivity {
 			case R.id.ll_panel_order_time:
 				if (pWindow != null && pWindow.isShowing()) {
 					pWindow.dismiss();
-				} else {
+				} else if(pWindow != null && !pWindow.isShowing()) {
+					pWindow.showAsDropDown(
+							findViewById(R.id.ll_panel_order_time), 0, 50);
+				}else{
 					IntialPopupWindow();
 					pWindow.showAsDropDown(
 							findViewById(R.id.ll_panel_order_time), 0, 50);
 				}
 				break;
-				 
 			case R.id.panel_30day:
 				time++;
 			case R.id.panel_7day:
@@ -192,7 +194,18 @@ public class GiftOrderActivity extends BaseActivity {
 					pWindow.dismiss();
 				}
 				orderTimeType = time;
-				tvOrderTime.setText(((TextView)v.findViewById(R.id.tv_time_str)).getText());
+				if(time == 1){
+					time_id = R.id.tv_time_str;
+				}else if(time == 2){
+					time_id = R.id.tv_time_str2;
+				}else if(time == 3){
+					time_id = R.id.tv_time_str3;
+				}else if(time == 4){
+					time_id = R.id.tv_time_str4;
+				}else{
+					time_id = R.id.tv_time_str5;
+				}
+				tvOrderTime.setText(((TextView)menu.findViewById(time_id)).getText());
 				EventBus.getDefault().post(
 						new EventMsg(OpCodes.GET_GIFT_ORDER_BY_TIME, orderTimeType));
 				 
@@ -310,9 +323,10 @@ public class GiftOrderActivity extends BaseActivity {
 		}
 
 	}
-	
+
+	private View menu;
 	private void IntialPopupWindow() {
-		View menu = ((GiftOrderActivity) mContext).getLayoutInflater().inflate(
+		menu = ((GiftOrderActivity) mContext).getLayoutInflater().inflate(
 				R.layout.gift_order_time_list, null, false);
 		pWindow = new PopupWindow(menu, (int) AppUtil.dpToPixel(mContext, 110),
 				(int) AppUtil.dpToPixel(mContext, 185));
@@ -324,7 +338,7 @@ public class GiftOrderActivity extends BaseActivity {
 			public boolean onTouch(View arg0, MotionEvent arg1) {
 				if (pWindow != null && pWindow.isShowing()) {
 					pWindow.dismiss();
-					pWindow = null;
+					//pWindow = null;
 				}
 				return false;
 			}

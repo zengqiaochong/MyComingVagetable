@@ -24,6 +24,7 @@ import com.caomei.comingvagetable.bean.eventbus.EventMsg;
 import com.caomei.comingvagetable.bean.order.OrderData;
 import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
+import com.caomei.comingvagetable.util.ToastUtil;
 import com.caomei.comingvagetable.wxapi.WXPayEntryActivity;
 import com.google.gson.Gson;
 
@@ -226,6 +227,7 @@ public class OrderInfoActivity extends BaseActivity{
 		final String url = CommonAPI.BASE_URL
 				+ String.format(CommonAPI.URL_UPDATE_ORDER_STATUS, id, "4",
 						ShareUtil.getInstance(mContext).getUserId());
+		Log.e("url","菜品签收接口Info："+url);
 		new Thread(new Runnable() {
 
 			@Override
@@ -308,7 +310,9 @@ public class OrderInfoActivity extends BaseActivity{
 			break;
 			
 		case OpCodes.SUBMIT_SIGN_DONE:
-			requestEvaluate(orderInfo.getOrder_id(),rbMaijia.getRating(),rbFuwu.getRating(),rbCaipin.getRating());
+			ToastUtil.Show(mContext, "签收成功");
+			OrderInfoActivity.this.finish();
+			//requestEvaluate(orderInfo.getOrder_id(),rbMaijia.getRating(),rbFuwu.getRating(),rbCaipin.getRating());
 			
 			break;
 		default:

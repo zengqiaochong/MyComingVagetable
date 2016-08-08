@@ -217,7 +217,7 @@ public class MainActivity extends BaseActivity {
 				ft.commitAllowingStateLoss();
 				resetTabView();
 				((ImageView) ivSign.findViewById(R.id.iv_order))
-						.setImageResource(R.drawable.iv_order_active);
+						.setImageResource(R.drawable.iv_sign_active);
 				break;
 			case R.id.v_user_center:
 				if (!ShareUtil.getInstance(mContext).getIsLogin()) {
@@ -271,7 +271,7 @@ public class MainActivity extends BaseActivity {
 				ft.commitAllowingStateLoss();
 				resetTabView();
 				((ImageView) ivFans.findViewById(R.id.iv_fans))
-						.setImageResource(R.drawable.iv_fans_green);
+						.setImageResource(R.drawable.iv_fans_active);
 				break;
 			case R.id.v_cart:
 				if (!ShareUtil.getInstance(mContext).getIsLogin()) {

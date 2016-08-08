@@ -173,5 +173,9 @@ public class OpCodes {
 	public static final int REQUEST_COMPANY_NAME_SUCCESS = 1293;
 	public static final int REQUEST_COMPANY_NAME_NULL = 1294;
 	public static final int REQUEST_COMPANY_NAME_ERROR = 1295;
+
+	public static final int BACK_PASSWORD_SUCCESS = 12354;
+	public static final int BACK_PASSWORD_ERROR = 12355;
+	public static final int CHECK_MSM_ERROR = 12356;
 	
 }

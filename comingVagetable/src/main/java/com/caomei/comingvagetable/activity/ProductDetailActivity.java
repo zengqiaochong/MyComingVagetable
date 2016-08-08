@@ -280,7 +280,7 @@ public class ProductDetailActivity extends BaseActivity {
 					tvBuyCount1.setText(String.valueOf(++count1));
 					break;
 				case R.id.iv_count_plus2:
-					count = Integer.parseInt(tvBuyCount2.getText().toString());
+					count2 = Integer.parseInt(tvBuyCount2.getText().toString());
 
 					if (count2 >= total2) {
 						ToastUtil.Show(mContext, "库存不足");
