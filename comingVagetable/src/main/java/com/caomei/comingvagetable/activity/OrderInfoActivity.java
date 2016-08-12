@@ -293,7 +293,7 @@ public class OrderInfoActivity extends BaseActivity{
 	public void onEventMainThread(EventMsg msg){
 		switch (msg.getFlag()) {
 		case OpCodes.CANCEL_ORDER_DONE:
-			Toast.makeText(mContext, msg.getData().toString(),Toast.LENGTH_SHORT).show();
+			ToastUtil.Show(mContext, msg.getData().toString());
 			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
@@ -302,18 +302,19 @@ public class OrderInfoActivity extends BaseActivity{
 			},500);
 			break;
 		case OpCodes.CANCEL_ORDER_ERROR:
-			Toast.makeText(mContext, msg.getData().toString(), Toast.LENGTH_SHORT).show();
+			ToastUtil.Show(mContext, msg.getData().toString());
 			break;
-		case OpCodes.EVALUATE_ORDER_ERROR: 
-		case OpCodes.EVALUATE_ORDER_DONE: 
-			Toast.makeText(mContext,msg.getData().toString(),Toast.LENGTH_SHORT).show();
+		case OpCodes.EVALUATE_ORDER_ERROR:
+			ToastUtil.Show(mContext,msg.getData().toString());
 			break;
-			
+		case OpCodes.EVALUATE_ORDER_DONE:
+			ToastUtil.Show(mContext,msg.getData().toString());
+			OrderInfoActivity.this.finish();
+			break;
 		case OpCodes.SUBMIT_SIGN_DONE:
 			ToastUtil.Show(mContext, "签收成功");
 			OrderInfoActivity.this.finish();
 			//requestEvaluate(orderInfo.getOrder_id(),rbMaijia.getRating(),rbFuwu.getRating(),rbCaipin.getRating());
-			
 			break;
 		default:
 			break;
@@ -326,6 +327,4 @@ public class OrderInfoActivity extends BaseActivity{
 		super.onDestroy();
 	}
 
-
 }
-

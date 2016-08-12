@@ -51,6 +51,10 @@ public class ShareUtil {
 		editor.putString("user_name", userName);
 		editor.commit();
 	}
+
+	public String getUserName(){
+		return shared.getString("user_name", "");
+	}
 	
 	/**
 	 * 获取上次更新菜单分类的时间 -- 目的是避免每次都去请求 而是间隔一定的 时间在请求。。

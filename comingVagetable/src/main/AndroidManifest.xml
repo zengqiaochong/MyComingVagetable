@@ -77,6 +77,9 @@
         <!-- Analytics start -->
 
         <activity
+            android:name=".activity.PromotionActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activity.Forgetpassword"
             android:screenOrientation="portrait"/>
         <activity

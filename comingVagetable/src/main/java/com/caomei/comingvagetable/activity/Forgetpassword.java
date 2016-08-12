@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.caomei.comingvagetable.CommonData.CommonAPI;
@@ -26,16 +26,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.greenrobot.event.EventBus;
-import de.greenrobot.event.ThreadMode;
 
 /**
  * 忘记密码tActivity
  * 2016/7/21
  */
 public class Forgetpassword extends BaseActivity {
-    EditText Forgetpassword_et_phone, Forgetpassword_Set_pass_text, Forgetpassword_Vre_ok_pass_edittext, Forgetpassword_Ver_code_edittext;
-    Button Forgetpassword_get_coder, Forgetpassword_ok__btn;
-    RelativeLayout Forgetpassword_return;
+    private EditText Forgetpassword_et_phone, Forgetpassword_Set_pass_text, Forgetpassword_Vre_ok_pass_edittext, Forgetpassword_Ver_code_edittext;
+    private Button Forgetpassword_get_coder, Forgetpassword_ok__btn;
+    private ImageView Forgetpassword_return;
     private CommonListner mListner;//点击监听事件
     private myTimerTask myTask;
     /*验证码剩余时间*/
@@ -52,7 +51,7 @@ public class Forgetpassword extends BaseActivity {
 
     public void setView() {
         /*返回*/
-        Forgetpassword_return = (RelativeLayout) findViewById(R.id.Forgetpassword_return);
+        Forgetpassword_return = (ImageView) findViewById(R.id.Forgetpassword_return);
         /*电话号码*/
         Forgetpassword_et_phone = (EditText) findViewById(R.id.Forgetpassword_et_phone);
         /*获取验证码*/
@@ -89,9 +88,10 @@ public class Forgetpassword extends BaseActivity {
                     break;
                 /*找回密码*/
                 case R.id.Forgetpassword_ok__btn:
-                    if (checkUserInfoFull()) {
+                    /*if (checkUserInfoFull()) {
                         checkMSMCoder();
-                    }
+                    }*/
+                    Forgetpasswordin();
                     break;
             }
         }
@@ -166,26 +166,26 @@ public class Forgetpassword extends BaseActivity {
             @Override
             public void run() {
                 String url = CommonAPI.BASE_URL + String.format(CommonAPI.URL_BACK_PASSWORD, Forgetpassword_Vre_ok_pass_edittext.getEditableText().toString(),
-                        -1, Forgetpassword_et_phone.getEditableText().toString());
-                Log.i("找回密码-----------", url);
+                        -1, Forgetpassword_et_phone.getEditableText().toString(), Forgetpassword_Ver_code_edittext.getEditableText().toString());
+                Log.i("重置密码-----------", url);
                 try {
                     AccessNetResultBean bean = NetUtil.getInstance(mContext).getDataFromNetByGet(url);
+                    TypeMsgBean tb = new Gson().fromJson(bean.getResult(), TypeMsgBean.class);
                     if (bean.getState() == AccessNetState.Success) {
-                        String Result = bean.getResult();
-                       TypeMsgBean tb = new Gson().fromJson(bean.getResult(), TypeMsgBean.class);
+                        //String Result = bean.getResult();
                         if (tb.getRESULT_TYPE() != 1) {
-                            /*找回密码成功*/
-                            EventBus.getDefault().post(new EventMsg(OpCodes.BACK_PASSWORD_SUCCESS, Result));
+                            /*修改密码成功*/
+                            EventBus.getDefault().post(new EventMsg(OpCodes.BACK_PASSWORD_SUCCESS, tb.getRESULT_MSG()));
                         } else {
-                           /* 找回密码失败*/
-                            EventBus.getDefault().post(new EventMsg(OpCodes.BACK_PASSWORD_ERROR, "修改密码失败！"));
+                           /* 修改密码失败*/
+                            EventBus.getDefault().post(new EventMsg(OpCodes.BACK_PASSWORD_ERROR, tb.getRESULT_MSG()));
                         }
                     } else {
                        /*短信验证失败*/
-                        EventBus.getDefault().post(new EventMsg(OpCodes.CHECK_MSM_ERROR, bean.getResult()));
+                        EventBus.getDefault().post(new EventMsg(OpCodes.BACK_PASSWORD_ERROR, tb.getRESULT_MSG()));
                     }
                 } catch (Exception ex) {
-                    EventBus.getDefault().post(new EventMsg(OpCodes.CHECK_MSM_ERROR, ex.toString()));
+                    EventBus.getDefault().post(new EventMsg(OpCodes.BACK_PASSWORD_ERROR, "修改密码失败！"));
                 }
             }
         }
@@ -230,7 +230,7 @@ public class Forgetpassword extends BaseActivity {
                 ShareUtil.getInstance(Forgetpassword.this).setUserName(Forgetpassword_et_phone.getText().toString());
                 startNewActivity(LoginActivity.class, R.anim.activity_slide_right_in, R.anim.activity_slide_left_out, true, null);
                 break;
-            case OpCodes.CHECK_MSM_ERROR:
+            case OpCodes.BACK_PASSWORD_ERROR:
                 ToastUtil.Show(mContext, msg.getData().toString());
                 break;
         }

@@ -177,5 +177,8 @@ public class OpCodes {
 	public static final int BACK_PASSWORD_SUCCESS = 12354;
 	public static final int BACK_PASSWORD_ERROR = 12355;
 	public static final int CHECK_MSM_ERROR = 12356;
+
+	public static final int GET_ACTIVYT_DONE = 12357;
+	public static final int GET_ACTIVYT_ERROR = 12358;
 	
 }

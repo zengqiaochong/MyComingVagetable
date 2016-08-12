@@ -44,9 +44,9 @@ public class ImageUtil {
             .showImageOnFail(R.drawable.none)
             .showImageOnLoading(R.drawable.none)
             .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-            .cacheInMemory(false)
-            .cacheOnDisk(false)
-            .considerExifParams(false)
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .considerExifParams(true)
             .displayer(new FadeInBitmapDisplayer(300))
             .bitmapConfig(Bitmap.Config.RGB_565).build();
     //drawable资源图片显示配置

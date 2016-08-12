@@ -64,7 +64,6 @@
 
 	<string name="re_tel">输入手机号码</string>
 	<string name="re_obtain_Ver_code">获取验证码</string>
-	<string name="re_Ver_code_name">验证码：</string>
 	<string name="re_input_Ver_code">请输入验证码</string>
 	<string name="re_Set_pass">设置密码</string>
 	<string name="re_ok_pass_name">确认密码：</string>

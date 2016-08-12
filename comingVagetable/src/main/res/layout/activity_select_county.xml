@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_bg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/top_banner"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/white" >
+        android:background="@color/white">
 
         <View
             android:layout_width="match_parent"
@@ -44,7 +44,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:background="@color/white"
-            android:orientation="horizontal" 
+            android:orientation="horizontal"
             android:visibility="gone">
 
             <ImageView
@@ -69,7 +69,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:background="@color/white"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -94,14 +94,14 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/ll_panel_city"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/gray_bg"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <ListView
                 android:id="@+id/lv_province"
@@ -124,24 +124,52 @@
             android:id="@+id/ll_panel_community"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/gray_bg"
-            android:orientation="horizontal" >
+            android:background="@color/gray_bg">
 
-            <ListView
-                android:id="@+id/lv_county"
-                android:layout_width="110dp"
-                android:layout_height="match_parent"
-                android:divider="@color/mark_black"
-                android:dividerHeight="0.5dp"
-                android:scrollbars="none" />
-
-            <ListView
-                android:id="@+id/lv_community"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@color/mark_black"
-                android:dividerHeight="0.5dp"
-                android:scrollbars="none" />
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ListView
+                        android:id="@+id/lv_county"
+                        android:layout_width="110dp"
+                        android:layout_height="match_parent"
+                        android:divider="@color/mark_black"
+                        android:dividerHeight="0.5dp"
+                        android:scrollbars="none" />
+
+                    <ListView
+                        android:id="@+id/lv_community"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="@color/mark_black"
+                        android:dividerHeight="0.5dp"
+                        android:scrollbars="none" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/dialog"
+                    android:layout_width="80.0dip"
+                    android:layout_height="80.0dip"
+                    android:layout_gravity="center"
+                    android:background="@drawable/show_head_toast_bg"
+                    android:gravity="center"
+                    android:textColor="#ffffffff"
+                    android:textSize="30.0dip"
+                    android:visibility="invisible" />
+
+                <com.caomei.comingvagetable.sortlistview.SideBar
+                    android:id="@+id/sidrbar"
+                    android:layout_width="30.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="right|center" />
+            </FrameLayout>
+
         </LinearLayout>
     </FrameLayout>
 

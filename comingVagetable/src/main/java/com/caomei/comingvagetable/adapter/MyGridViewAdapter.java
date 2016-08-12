@@ -56,7 +56,6 @@ public class MyGridViewAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int pos, View convertView, ViewGroup parent) {
-
 		ViewHolder holder = null;
 		if (convertView == null) {
 			holder = new ViewHolder();

@@ -70,6 +70,7 @@ public class LoginActivity extends BaseActivity {
 		tvForgetPwd.setOnClickListener(mListener);
 		btLogin.setOnClickListener(mListener);
 		ivBack.setOnClickListener(mListener);
+		etPhoneNum.setText(ShareUtil.getInstance(LoginActivity.this).getUserName());
 	}
 
 	class CommonListener implements OnClickListener {

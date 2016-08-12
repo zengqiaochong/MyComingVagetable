@@ -2,6 +2,8 @@ package com.caomei.comingvagetable.activity;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -30,6 +32,9 @@ import com.caomei.comingvagetable.bean.AddressData;
 import com.caomei.comingvagetable.bean.CommunityBean;
 import com.caomei.comingvagetable.bean.CommunityData;
 import com.caomei.comingvagetable.bean.eventbus.EventMsg;
+import com.caomei.comingvagetable.sortlistview.CharacterParser;
+import com.caomei.comingvagetable.sortlistview.PinyinComparator;
+import com.caomei.comingvagetable.sortlistview.SideBar;
 import com.caomei.comingvagetable.util.MethodUtil;
 import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
@@ -72,6 +77,11 @@ public class SelectAreaActivity extends BaseActivity {
 	private String temCity;
 	private String temProvince;
 	private AddressData addr;
+	private SideBar sideBar;
+	/**
+	 * 显示字母的TextView
+	 */
+	private TextView dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,17 +94,38 @@ public class SelectAreaActivity extends BaseActivity {
 	}
 
 	private void initView() {
+		pinyinComparator = new PinyinComparator();
+		//实例化汉字转拼音类
+		characterParser = CharacterParser.getInstance();
 		lvCounty = (ListView) findViewById(R.id.lv_county);
 		lvCommunity = (ListView) findViewById(R.id.lv_community);
 		lvCity = (ListView) findViewById(R.id.lv_city);
 		lvProvince = (ListView) findViewById(R.id.lv_province);
-
 		panelChina = (LinearLayout) findViewById(R.id.ll_panel_locate_china);
 		panelLocCity = (LinearLayout) findViewById(R.id.ll_panel_locate_city);
 		panelCommunity = (LinearLayout) findViewById(R.id.ll_panel_community);
 		panelProvince = (LinearLayout) findViewById(R.id.ll_panel_city);
 		tvLocaCity = (TextView) findViewById(R.id.tv_locate_city);
 		ivBack = (ImageView) findViewById(R.id.iv_back);
+		sideBar = (SideBar) findViewById(R.id.sidrbar);
+		dialog = (TextView) findViewById(R.id.dialog);
+		sideBar.setTextView(dialog);
+		//设置右侧触摸监听
+		sideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
+			@Override
+			public void onTouchingLetterChanged(String s) {
+				//该字母首次出现的位置
+				int position = -1;
+				if(panelCommunity.getVisibility() == View.VISIBLE){
+					position = communityAdapter.getPositionForSection(s.charAt(0));
+				}
+				if(position != -1){
+					if(panelCommunity.getVisibility() == View.VISIBLE){
+						lvCommunity.setSelection(position);
+					}
+				}
+			}
+		});
 	}
 
 	private void initData() {
@@ -190,12 +221,21 @@ public class SelectAreaActivity extends BaseActivity {
 		requestAllCommunity();
 	}
 
+	private PinyinComparator pinyinComparator;
+	private CharacterParser characterParser;
 	protected void refreshCommunityData(String county) {
 		if (xBean != null) {
 			Communities.clear();
-			Communities.addAll(xBean.getCommunity(county));
+			List<CommunityData> lists = xBean.getCommunity(county);
+			for(CommunityData sortName : lists){
+				sortName.sortLetters = characterParser.getSelling(sortName.getCommunityName());
+			}
+			// 根据a-z进行排序
+			Collections.sort(lists, pinyinComparator);
+			Communities.addAll(lists);
 			CommunityData data=new CommunityData();
 			data.setCommunityName("更多小区...");
+			data.sortLetters = "#";
 			Communities.add(data);
 			communityAdapter.notifyDataSetChanged();
 		}

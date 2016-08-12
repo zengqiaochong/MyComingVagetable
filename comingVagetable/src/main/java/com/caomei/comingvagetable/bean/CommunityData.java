@@ -9,6 +9,7 @@ public class CommunityData {
 	private String postCode;
 	private String firstAgent_id;
 	private String secondAgent_id;
+	public String sortLetters;  //显示数据拼音的首字母
 	
 	
 	public String getPostCode() {

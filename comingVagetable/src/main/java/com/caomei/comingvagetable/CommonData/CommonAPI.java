@@ -12,9 +12,10 @@ public class CommonAPI {
 
 	/**
 	 * 获取数据的基础URL 
-	 */	public static String BASE_URL = "http://www.happycopy.cn:8080/zouma_t1/";
+	 */
+//	public static String BASE_URL = "http://www.happycopy.cn:8080/zouma_t1/";
 //	public static String BASE_URL = "http://www.happycopy.cn:8080/zouma/";
-//	public static String BASE_URL = "http://192.168.1.100:8080/zouma/";
+	public static String BASE_URL = "http://192.168.1.110:8080/zouma/";
 
 	/**
 	 * <pre>
@@ -42,6 +43,11 @@ public class CommonAPI {
 	 */
 	public static String URL_VEGE_MAIN = BASE_URL
 			+ "VegeProvide_getVegeProvidesByPage?community_id=%s&iDisplayStart=%d&iDisplayLength=%d&sEcho=%d&vegeType_id=%s&user_id=%s";
+
+	/*获取活动banner图集合的接口*/
+	public static String URL_GET_ACTIVITY= BASE_URL + "Picture_showPicture?user_id=%s";
+	/*获取活动banner图的接口*/
+	public static String URL_GET_ACTIVITY_IMAGE= BASE_URL + "Picture_loadPicture?imgid=%s&clazzName=%s&user_id=%s";
 
 	/**
 	 * 获取单个菜品信息的接口 1 vegeProvide_id 2 user_id
@@ -417,5 +423,5 @@ public class CommonAPI {
     *找回密码接口
     *
     * */
-	public static String URL_BACK_PASSWORD = "User_retrievePasswordForApp?password=%s&user_id=%s&phone=%s&roleType=6";
+	public static String URL_BACK_PASSWORD = "User_retrievePasswordForApp?password=%s&user_id=%s&phone=%s&roleType=6&smsCode=%s";
 }

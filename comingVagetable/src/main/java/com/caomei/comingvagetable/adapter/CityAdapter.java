@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.adapter.ProvinceAdapter.ViewHolder;
+import com.caomei.comingvagetable.sortlistview.CharacterParser;
 
 public class CityAdapter extends BaseAdapter {
 
@@ -62,4 +63,5 @@ public class CityAdapter extends BaseAdapter {
 	class ViewHolder {
 		public TextView tvVillage;
 	}
+
 }

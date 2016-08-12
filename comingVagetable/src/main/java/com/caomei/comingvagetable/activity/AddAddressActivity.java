@@ -1,6 +1,8 @@
 package com.caomei.comingvagetable.activity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.json.JSONObject;
 
@@ -35,6 +37,9 @@ import com.caomei.comingvagetable.bean.CommunityData;
 import com.caomei.comingvagetable.bean.TypeMsgBean;
 import com.caomei.comingvagetable.bean.UserInfoBean;
 import com.caomei.comingvagetable.bean.eventbus.EventMsg;
+import com.caomei.comingvagetable.sortlistview.CharacterParser;
+import com.caomei.comingvagetable.sortlistview.PinyinComparator;
+import com.caomei.comingvagetable.sortlistview.SideBar;
 import com.caomei.comingvagetable.util.MethodUtil;
 import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
@@ -85,6 +90,11 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener 
 	private TextView tvDeliverName;
 	private TextView tvPhone;
 	private String communityId;
+	private SideBar sideBar;
+	/**
+	 * 显示字母的TextView
+	 */
+	private TextView dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +108,9 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener 
 	}
 
 	private void initViews() {
+		pinyinComparator = new PinyinComparator();
+		//实例化汉字转拼音类
+		characterParser = CharacterParser.getInstance();
 		tvCommunity = (TextView) findViewById(R.id.tv_community);
 		tvLocCommunity = (TextView) findViewById(R.id.tv_commnity_name);
 		panelLocCommunity = (LinearLayout) findViewById(R.id.ll_panel_loc_community);
@@ -120,6 +133,25 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener 
 		
 		tvDeliverName=(TextView)findViewById(R.id.tv_server);
 		tvPhone=(TextView)findViewById(R.id.tv_phone);
+		sideBar = (SideBar) findViewById(R.id.sidrbar);
+		dialog = (TextView) findViewById(R.id.dialog);
+		sideBar.setTextView(dialog);
+		//设置右侧触摸监听
+		sideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
+			@Override
+			public void onTouchingLetterChanged(String s) {
+				//该字母首次出现的位置
+				int position = -1;
+				if(panelCommunity.getVisibility() == View.VISIBLE){
+					position = communityAdapter.getPositionForSection(s.charAt(0));
+				}
+				if(position != -1){
+					if(panelCommunity.getVisibility() == View.VISIBLE){
+						lvCommunity.setSelection(position);
+					}
+				}
+			}
+		});
 	}
 
 	private void initData() {
@@ -323,12 +355,22 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener 
 		}).start();
 	}
 
+	private PinyinComparator pinyinComparator;
+	private CharacterParser characterParser;
 	private void refreshCommunityData(String county) {
 		if (xBean != null) {
 			Communities.clear();
-			Communities.addAll(xBean.getCommunity(county));
+			List<CommunityData> lists = xBean.getCommunity(county);
+			for(CommunityData sortName : lists){
+				sortName.sortLetters = characterParser.getSelling(sortName.getCommunityName());
+			}
+			// 根据a-z进行排序
+			Collections.sort(lists, pinyinComparator);
+			Communities.addAll(lists);
+			//Communities.addAll(xBean.getCommunity(county));
 			CommunityData data = new CommunityData();
 			data.setCommunityName("更多小区...");
+			data.sortLetters = "#";
 			Communities.add(data);
 			communityAdapter.notifyDataSetChanged();
 		}

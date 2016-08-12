@@ -1,22 +1,11 @@
 package com.caomei.comingvagetable.fragment;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,7 +15,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,18 +24,20 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.CommonData.CommonAPI;
 import com.caomei.comingvagetable.CommonData.OpCodes;
 import com.caomei.comingvagetable.Enum.AccessNetState;
+import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.activity.BroswerActivity;
 import com.caomei.comingvagetable.activity.MainActivity;
 import com.caomei.comingvagetable.activity.ProductDetailActivity;
+import com.caomei.comingvagetable.activity.PromotionActivity;
 import com.caomei.comingvagetable.activity.SearchActivity;
 import com.caomei.comingvagetable.activity.SelectAreaActivity;
 import com.caomei.comingvagetable.adapter.MyGridViewAdapter;
 import com.caomei.comingvagetable.bean.AccessNetResultBean;
 import com.caomei.comingvagetable.bean.AddressData;
+import com.caomei.comingvagetable.bean.GetActivityEntity;
 import com.caomei.comingvagetable.bean.LocateBean;
 import com.caomei.comingvagetable.bean.eventbus.CategoryBus;
 import com.caomei.comingvagetable.bean.eventbus.EventMsg;
@@ -58,16 +48,16 @@ import com.caomei.comingvagetable.loadmoregridview.GridViewWithHeaderAndFooter;
 import com.caomei.comingvagetable.refresh.PtrClassicFrameLayout;
 import com.caomei.comingvagetable.refresh.PtrFrameLayout;
 import com.caomei.comingvagetable.refresh.PtrHandler;
-import com.caomei.comingvagetable.util.AppUtil;
 import com.caomei.comingvagetable.util.ImageUtil;
 import com.caomei.comingvagetable.util.MethodUtil;
 import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
-import com.caomei.comingvagetable.util.ToastUtil;
 import com.google.gson.Gson;
 import com.minking.imagecycleview.ImageCycleView;
 import com.minking.imagecycleview.PicSlideInfo;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
 
@@ -120,15 +110,48 @@ public class FragmentMain extends Fragment {
 		mListener = new CommonListener();
 		gridDataset = new ArrayList<VegeAllBeanData>();
 		picUrls = new ArrayList<String>();
-		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner.jpg");
-		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner1.jpg");
-		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner2.jpg");
-		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner3.jpg");
 		//picUrls.add("http://b.picphotos.baidu.com/album/s%3D1600%3Bq%3D90/sign=b7903557082442a7aa0ef9a3e173963a/cb8065380cd79123be1c9ba0aa345982b3b78061.jpg");
 		//picUrls.add("http://f.picphotos.baidu.com/album/s%3D1600%3Bq%3D90/sign=c4abb0f7642762d0843ea0b990dc338b/810a19d8bc3eb1355ebdb86fa11ea8d3fc1f44ef.jpg");
 		//picUrls.add("http://g.picphotos.baidu.com/album/s%3D1600%3Bq%3D90/sign=64a541100dd162d981ee661a21ef929d/9358d109b3de9c82b7f5f65b6b81800a18d84355.jpg");
 		//picUrls.add("http://c.picphotos.baidu.com/album/s%3D1600%3Bq%3D90/sign=7acc410853e736d15c13880eab6074b3/cefc1e178a82b9018852cce7748da9773812ef63.jpg");
+		requestActivity();
+	}
 
+	//Picture_showPicture
+	public GetActivityEntity activityEntity;
+	private void requestActivity() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				String url = String.format(CommonAPI.URL_GET_ACTIVITY, ShareUtil.getInstance(mContext).getUserId());
+				Log.e("url", "主页获取banner图的url: " + url);
+				AccessNetResultBean aBean = NetUtil.getInstance(mContext)
+						.getDataFromNetByGet(url);
+				if (aBean.getState() == AccessNetState.Success) {
+					try {
+						activityEntity = new Gson().fromJson(aBean.getResult(),
+								GetActivityEntity.class);
+						Log.e("data", aBean.getResult());
+						EventBus.getDefault().post(
+								new EventMsg(
+										OpCodes.GET_ACTIVYT_DONE,
+										null));
+					} catch (Exception e) {
+						EventBus.getDefault()
+								.post(new EventMsg(
+										OpCodes.GET_ACTIVYT_ERROR,
+										mContext.getResources().getString(
+												R.string.get_data_error_format)));
+					}
+				} else {
+					EventBus.getDefault().post(
+							new EventMsg(
+									OpCodes.GET_ACTIVYT_ERROR,
+									mContext.getResources().getString(
+											R.string.request_failed)));
+				}
+			}
+		}).start();
 	}
 
 	@Override
@@ -217,15 +240,6 @@ public class FragmentMain extends Fragment {
 	}
 
 	private void resetGridData() {
-		slidePics.clear();
-		for (int i = 0; i < picUrls.size(); i++) {
-			PicSlideInfo info = new PicSlideInfo();
-			info.setUrl(picUrls.get(i));
-			info.setContent("test");
-			slidePics.add(info);
-		}
-		mCycleViewPics.setImageResources(slidePics, mCycleViewListener);
-
 		gridDataset.clear();
 		gridDataset.addAll(vBean.getData());
 		if (vBean.getData() == null || vBean.getData().size() == 0) {
@@ -495,7 +509,7 @@ public class FragmentMain extends Fragment {
 			bundle.putString("pc", gridDataset.get(arg2).getProChannel());
 			bundle.putString("pw", gridDataset.get(arg2).getProcessWay());
 			bundle.putFloat("volume", gridDataset.get(arg2).getPerUnitVolume());
-			bundle.putString("weight", "重量：>" + gridDataset.get(arg2).perUnitWeight  + "kg/" + gridDataset.get(arg2).getUnit());
+			bundle.putString("weight", "重量：≈" + gridDataset.get(arg2).perUnitWeight  + "kg/" + gridDataset.get(arg2).getUnit());
 			((MainActivity) mContext).startNewActivity(
 					ProductDetailActivity.class,
 					R.anim.activity_slide_right_in,
@@ -556,6 +570,12 @@ public class FragmentMain extends Fragment {
 			Toast.makeText(mContext, msg.getData().toString(),
 					Toast.LENGTH_SHORT).show();
 			break;
+			case OpCodes.GET_ACTIVYT_DONE:
+				addImage();
+				break;
+			case OpCodes.GET_ACTIVYT_ERROR:
+				addImage();
+				break;
 		case OpCodes.GET_DEFAULT_ADDRESS_NULL:
 		case OpCodes.GET_DEFAULT_ADDRESS_ERROR:
 			ShowDialog();
@@ -583,17 +603,50 @@ public class FragmentMain extends Fragment {
 			mAdapter.setData(gridDataset);
 			mAdapter.notifyDataSetChanged();
 			break;
-
 		default:
 			break;
 		}
+	}
+
+	private void addDefaultImage() {
+		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner.jpg");
+		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner1.jpg");
+		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner2.jpg");
+		picUrls.add("http://www.happycopy.cn:8080/zouma_t1/banner3.jpg");
+	}
+
+	private void addImage() {
+		for(GetActivityEntity.ActivityEntity entity: activityEntity.data){
+			picUrls.add(String.format(CommonAPI.URL_GET_ACTIVITY_IMAGE, entity.id, "PictureOfCommon", ShareUtil.getInstance(mContext).getUserId()));
+		}
+		if(picUrls.size() == 0){
+			addDefaultImage();
+		}
+		slidePics.clear();
+		for (int i = 0; i < picUrls.size(); i++) {
+			PicSlideInfo info = new PicSlideInfo();
+			info.setUrl(picUrls.get(i));
+			info.setContent("test");
+			slidePics.add(info);
+		}
+		mCycleViewPics.setImageResources(slidePics, mCycleViewListener);
 	}
 
 	private ImageCycleView.ImageCycleViewListener mCycleViewListener = new ImageCycleView.ImageCycleViewListener() {
 
 		@Override
 		public void onImageClick(PicSlideInfo info, int position, View imageView) {
-
+			if(activityEntity != null && activityEntity.data != null && activityEntity.data.size() > position){
+				if(activityEntity.data.get(position).activity_url != null){
+					Bundle intent = new Bundle();
+					intent.putString("link_url", CommonAPI.BASE_URL + activityEntity.data.get(position).activity_url);
+					intent.putString("title", activityEntity.data.get(position).title);
+					((MainActivity) mContext).startNewActivity(
+							PromotionActivity.class,
+							R.anim.activity_slide_left_in,
+							R.anim.activity_slide_right_out, false, intent);
+				}
+			}
 		}
 
 		@Override
