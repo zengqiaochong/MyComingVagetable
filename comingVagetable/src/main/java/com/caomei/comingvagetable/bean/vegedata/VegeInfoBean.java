@@ -12,6 +12,8 @@ import java.util.List;
 public class VegeInfoBean implements Serializable {
 	private static final long serialVersionUID = -1337192382783225201L;
 	public List<MCommons> commons;//等级集合
+	public String provider;//供应方式
+	public String perUnitWeight;//重量
 	private String vege_id;
 	private String vegeName;
 	private float price;

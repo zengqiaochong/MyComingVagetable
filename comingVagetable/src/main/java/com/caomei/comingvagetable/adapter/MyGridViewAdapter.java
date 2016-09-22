@@ -76,8 +76,8 @@ public class MyGridViewAdapter extends BaseAdapter {
 		if(itemData.get(pos).getFormatImgUrls()!=null&&itemData.get(pos).getFormatImgUrls().size()>0){
 			ImageUtil.showImageFromUrl(itemData.get(pos).getFormatImgUrls().get(0),holder.itemPic,ImageUtil.imageVegeOptions);
 		}
-		holder.itemOnsellTime.setText("市场参考价格："+itemData.get(pos).marketPrice + "元/kg");
-		holder.itemProvider.setText("重量：≈" + itemData.get(pos).perUnitWeight + "kg/" + itemData.get(pos).getUnit());
+		holder.itemOnsellTime.setText("市场参考价格："+ (Float.parseFloat(itemData.get(pos).marketPrice) / 2.0f) + "元/斤");
+		holder.itemProvider.setText("重量：≈" + Float.parseFloat(itemData.get(pos).perUnitWeight) * 2 + "斤/" + itemData.get(pos).getUnit());
 		holder.itemPrice.setText("今日最低价：" + itemData.get(pos).getPrice()+"元/"+itemData.get(pos).getUnit());
 		return convertView;
 	}

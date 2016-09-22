@@ -62,5 +62,54 @@
             android:paddingTop="5dp" >
         </LinearLayout>
 	
-    </FrameLayout> 
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/main_snack_street"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="match_parent"
+            android:text="小吃街"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/main_snack_street_img"/>
+        <TextView
+            android:id="@+id/main_spring_festival_goods"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="match_parent"
+            android:text="快餐外卖"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/main_spring_festival_img"/>
+        <TextView
+            android:id="@+id/main_draw_lottery"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="match_parent"
+            android:text="摇奖区"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/main_draw_lottery_img"/>
+        <TextView
+            android:id="@+id/main_housekeeper_mall"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="match_parent"
+            android:text="管家商城"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/main_housekeeper_mall_img"/>
+    </LinearLayout>
 </LinearLayout>

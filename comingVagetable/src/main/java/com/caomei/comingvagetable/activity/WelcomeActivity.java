@@ -6,18 +6,18 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
-import cn.jpush.android.api.JPushInterface;
 
-import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.CommonData.AppData;
 import com.caomei.comingvagetable.CommonData.CommonAPI;
 import com.caomei.comingvagetable.CommonData.OpCodes;
 import com.caomei.comingvagetable.Enum.AccessNetState;
+import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.bean.AccessNetResultBean;
 import com.caomei.comingvagetable.bean.eventbus.EventMsg;
 import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
 
+import cn.jpush.android.api.JPushInterface;
 import de.greenrobot.event.EventBus;
 
 public class WelcomeActivity extends BaseActivity {
@@ -32,7 +32,6 @@ public class WelcomeActivity extends BaseActivity {
 		EventBus.getDefault().register(this);
 		mContext = this;
 		AppData.mContext = this;
-
 		updateAppData();
 	}
 

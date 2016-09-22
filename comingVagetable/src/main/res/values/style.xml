@@ -49,4 +49,11 @@
         <!-- 设置屏幕变暗 -->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-</resources>
+
+    <style name="Transparent" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/transparent_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+    </style>
+</resources>

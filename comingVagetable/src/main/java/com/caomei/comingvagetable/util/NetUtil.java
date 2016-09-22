@@ -1,5 +1,40 @@
 package com.caomei.comingvagetable.util;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
+import android.util.Log;
+import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.Toast;
+
+import com.caomei.comingvagetable.CommonData.CommonAPI;
+import com.caomei.comingvagetable.CommonData.OpCodes;
+import com.caomei.comingvagetable.Enum.AccessNetState;
+import com.caomei.comingvagetable.bean.AccessNetResultBean;
+import com.caomei.comingvagetable.bean.eventbus.EventMsg;
+import com.caomei.comingvagetable.bean.vegedata.VegeCartBean;
+import com.google.gson.Gson;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -20,46 +55,9 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.CoreConnectionPNames;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Build;
-import android.util.Log;
-import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.Toast;
-
-import com.caomei.comingvagetable.CommonData.CommonAPI;
-import com.caomei.comingvagetable.CommonData.OpCodes;
-import com.caomei.comingvagetable.Enum.AccessNetState;
-import com.caomei.comingvagetable.bean.AccessNetResultBean;
-import com.caomei.comingvagetable.bean.eventbus.EventMsg;
-import com.caomei.comingvagetable.bean.vegedata.VegeCartBean;
-import com.google.gson.Gson;
 
 import de.greenrobot.event.EventBus;
 
@@ -603,28 +601,18 @@ public class NetUtil {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				String url = CommonAPI.BASE_URL
-						+ String.format(CommonAPI.URL_GET_CART_VEGE, 0, 10000,
-								1, ShareUtil.getInstance(mContext).getUserId());
+				String url = CommonAPI.BASE_URL + String.format(CommonAPI.URL_GET_CART_VEGE, 0, 10000, 1, ShareUtil.getInstance(mContext).getUserId());
 				Log.e("url", "获取购物车数据  " + url);
-				AccessNetResultBean bean = NetUtil.getInstance(mContext)
-						.getDataFromNetByGet(url);
+				AccessNetResultBean bean = NetUtil.getInstance(mContext).getDataFromNetByGet(url);
 				if (bean.getState() == AccessNetState.Success) {
 					try {
-						VegeCartBean vcBean = new Gson().fromJson(
-								bean.getResult(), VegeCartBean.class);
-						EventBus.getDefault()
-								.post(new EventMsg(OpCodes.CART_DATA_GET_DONE,
-										vcBean));
+						VegeCartBean vcBean = new Gson().fromJson(bean.getResult(), VegeCartBean.class);
+						EventBus.getDefault().post(new EventMsg(OpCodes.CART_DATA_GET_DONE, vcBean));
 					} catch (Exception ex) {
-						EventBus.getDefault().post(
-								new EventMsg(OpCodes.CART_DATA_GET_ERROR, ex
-										.getMessage()));
+						EventBus.getDefault().post(new EventMsg(OpCodes.CART_DATA_GET_ERROR, ex.getMessage()));
 					}
 				} else {
-					EventBus.getDefault().post(
-							new EventMsg(OpCodes.CART_DATA_GET_ERROR,
-									"获取购物车数据失败"));
+					EventBus.getDefault().post(new EventMsg(OpCodes.CART_DATA_GET_ERROR, "获取购物车数据失败"));
 				}
 			}
 		}).start();

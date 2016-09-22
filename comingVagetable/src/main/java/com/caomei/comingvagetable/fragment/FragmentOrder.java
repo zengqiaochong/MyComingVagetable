@@ -1,7 +1,5 @@
 package com.caomei.comingvagetable.fragment;
 
-import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -21,16 +19,20 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.caomei.comingvagetable.CommonData.OpCodes;
 import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.R.color;
-import com.caomei.comingvagetable.CommonData.OpCodes;
 import com.caomei.comingvagetable.activity.MainActivity;
 import com.caomei.comingvagetable.adapter.FragmentAdapter;
 import com.caomei.comingvagetable.bean.eventbus.EventMsg;
 import com.caomei.comingvagetable.util.AppUtil;
 
+import java.util.ArrayList;
+
 import de.greenrobot.event.EventBus;
 
+
+/*订单页面*/
 @SuppressLint("ValidFragment")
 public class FragmentOrder extends BaseFragment {
 

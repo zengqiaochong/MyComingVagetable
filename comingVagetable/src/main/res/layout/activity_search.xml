@@ -94,7 +94,7 @@
                 android:background="@drawable/gray_borad_bg"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:text="青菜"
+                android:text="蔬菜"
                 android:textColor="@color/des_black"
                 android:textSize="13sp" />
 

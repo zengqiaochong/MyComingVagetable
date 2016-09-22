@@ -58,13 +58,20 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <!-- 与微信QQ通信需要的权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
-        android:name="App"
+        android:name=".App"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         <activity
-            android:name="com.caomei.comingvagetable.activity.WelcomeActivity"
+            android:name=".activity.WelcomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -78,56 +85,62 @@
 
         <activity
             android:name=".activity.PromotionActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.Forgetpassword"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ProductDetailActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CartActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RegistActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.OrderConfirm"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AddressManageActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AddAddressActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.GuardActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PaymentActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.cn.xiugai" />
+
                 <data android:scheme="wx5460ccc17f119e8a" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.UserInfoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MadunActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AliPaymentActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SelectAreaActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ComplaintActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".housekeeper.activity.HouseKeeperActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ProductDetailContentActivity"
             android:screenOrientation="portrait"
@@ -136,81 +149,87 @@
             android:name=".activity.ProductDetailExplainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!--<activity
+        <!--
+        <activity
             android:name=".activity.LogisticsActivity"
             android:screenOrientation="portrait" >
-        </activity>-->
+        </activity>
+        -->
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.OrderInfoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.GiftInfoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.GiftOrderActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LogisticActivity"
-            android:screenOrientation="portrait"></activity>
-        <!--<activity
+            android:screenOrientation="portrait" />
+        <!--
+        <activity
             android:name=".activity.ChargeActivity"
             android:screenOrientation="portrait" >
-        </activity>-->
+        </activity>
+        -->
         <activity
             android:name=".activity.LogisticGiftActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyDiscountActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SettingActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MyPurseActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ChargeMoney"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BroswerActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SearchActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
 
-
-        <service android:name="com.caomei.comingvagetable.service.DownloadApkService" />
+        <service android:name=".service.DownloadApkService" />
 
         <!-- 淘宝支付相关 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
 
         <!-- 百度定位服务 -->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="9QAlNnDnlF3eUgjf5IifU2zc" />
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="575683dfe0f55acb8100340a"></meta-data>
+            android:value="575683dfe0f55acb8100340a" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="umeng"></meta-data>
+            android:value="umeng" />
 
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
@@ -244,11 +263,15 @@
                 <category android:name="com.caomei.comingvagetable" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:theme="@style/Transparent" />
         <!-- Required SDK核心功能 -->
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
         <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 
@@ -271,6 +294,11 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="cf7cbb17a3aa9e88adf90e51" />
+        <!-- 快餐外卖主页 -->
+        <activity android:name=".takeaway.activity.HomeTakeawayActivity" />
+        <!-- 外卖菜品列表 -->
+        <activity android:name=".takeaway.activity.TakeawayListActivity" />
+        <activity android:name=".takeaway.activity.SubmitOrderActivity"></activity>
     </application>
 
 </manifest>

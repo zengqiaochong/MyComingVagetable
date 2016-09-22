@@ -1,10 +1,11 @@
 package com.caomei.comingvagetable.bean;
 
-import java.io.Serializable;
-
 import com.caomei.comingvagetable.CommonData.AppData;
 import com.caomei.comingvagetable.CommonData.CommonAPI;
 import com.caomei.comingvagetable.util.ShareUtil;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class UserInfoBean implements Serializable {
 	private static final long serialVersionUID = -4604502498468612649L;
@@ -19,6 +20,7 @@ public class UserInfoBean implements Serializable {
 	private String user_id;
 	private String user_name;
 	private String username;
+	public List<QQNumbers> qq_numbers;
 	
 	private String photo_id;
 	private String nickName;
@@ -29,7 +31,10 @@ public class UserInfoBean implements Serializable {
 	private String levelName;
 	private String shopingDiscount;
 	private String convertDiscount;
-	
+
+	public class QQNumbers{
+		public String qq_number;
+	}
 
 	public String getUsername() {
 		return username;

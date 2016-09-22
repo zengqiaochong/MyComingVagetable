@@ -124,13 +124,13 @@ public class SearchActivity extends BaseActivity {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			Bundle mBundle = new Bundle();
-			mBundle.putString("id", dataSet.get(arg2).getVegeId());
+			mBundle.putString("id", dataSet.get(arg2).vege_id);
 			mBundle.putString("pc", dataSet.get(arg2).getProChannel());
 			mBundle.putString("pw", dataSet.get(arg2).getProcessWay());
 			mBundle.putFloat("volume", dataSet.get(arg2).getPerUnitVolume());
 			startNewActivity(ProductDetailActivity.class,
 					R.anim.activity_slide_right_in,
-					R.anim.activity_slide_left_out, true, mBundle);
+					R.anim.activity_slide_left_out, false, mBundle);
 		}
 
 	}

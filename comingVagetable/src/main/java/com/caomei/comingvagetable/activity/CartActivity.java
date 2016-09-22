@@ -1,15 +1,11 @@
 package com.caomei.comingvagetable.activity;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.widget.SlidingPaneLayout.PanelSlideListener;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewDebug.FlagToString;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -18,13 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView; 
+import android.widget.TextView;
 
-import com.caomei.comingvagetable.IDialogOperation;
-import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.CommonData.CommonAPI;
 import com.caomei.comingvagetable.CommonData.OpCodes;
 import com.caomei.comingvagetable.Enum.AccessNetState;
+import com.caomei.comingvagetable.IDialogOperation;
+import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.adapter.VegeCartAdapter;
 import com.caomei.comingvagetable.bean.AccessNetResultBean;
 import com.caomei.comingvagetable.bean.TypeMsgBean;
@@ -37,6 +33,8 @@ import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
 import com.caomei.comingvagetable.util.ToastUtil;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
 
@@ -202,15 +200,15 @@ public class CartActivity extends BaseActivity {
 				String orderIds = "";
 				for (int i = 0; i < mData.size(); i++) {
 					if (mData.get(i).isSelected()) {
-						if (TextUtils.isEmpty(orderIds)) {
-							orderIds = mData.get(i).getScarid();
+						if (
+								TextUtils.isEmpty(orderIds)) {orderIds = mData.get(i).getScarid();
 						} else {
-							orderIds = orderIds + ";"
-									+ mData.get(i).getScarid();
+							orderIds = orderIds + ";" + mData.get(i).getScarid();
 						}
 					}
 				}
 				final String idList = orderIds;
+
 				if (TextUtils.isEmpty(orderIds)) {
 					ToastUtil.Show(mContext, "未选择订单");
 					return;
@@ -290,74 +288,49 @@ public class CartActivity extends BaseActivity {
 
 		}
 	}
-
+  //从购物车增加数量 1 购物车项目id 2 更改的数值（正数加，负数减） 3 user_id
 	public void changeCartItemCount(final String scarid, final double val) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				String url = CommonAPI.BASE_URL
-						+ String.format(CommonAPI.URL_CHANGE_CART_ITEM_COUNT,
-								scarid, val, ShareUtil.getInstance(mContext)
-										.getUserId());
-				AccessNetResultBean bean = NetUtil.getInstance(mContext)
-						.getDataFromNetByGet(url);
+				String url = CommonAPI.BASE_URL + String.format(CommonAPI.URL_CHANGE_CART_ITEM_COUNT, scarid, val, ShareUtil.getInstance(mContext).getUserId());
+				AccessNetResultBean bean = NetUtil.getInstance(mContext).getDataFromNetByGet(url);
 				if (bean.getState() == AccessNetState.Success) {
-					TypeMsgBean sBean = new Gson().fromJson(bean.getResult(),
-							TypeMsgBean.class);
+					TypeMsgBean sBean = new Gson().fromJson(bean.getResult(), TypeMsgBean.class);
 					if (sBean.getRESULT_TYPE() == 1) {
-						EventBus.getDefault().post(
-								new EventMsg(
-										OpCodes.CHANGE_CART_ITEM_COUNT_DONE,
-										sBean.getRESULT_CAR_VOLUME()));
+						EventBus.getDefault().post(new EventMsg(OpCodes.CHANGE_CART_ITEM_COUNT_DONE, sBean.getRESULT_CAR_VOLUME()));
 					} else {
-						EventBus.getDefault().post(
-								new EventMsg(
-										OpCodes.CHANGE_CART_ITEM_COUNT_ERROR,
-										sBean.getRESULT_MSG()));
+						EventBus.getDefault().post(new EventMsg(OpCodes.CHANGE_CART_ITEM_COUNT_ERROR, sBean.getRESULT_MSG()));
 					}
 				} else {
-					EventBus.getDefault().post(
-							new EventMsg(OpCodes.DEL_CART_ITEM_ERROR, "操作失败"));
+					EventBus.getDefault().post(new EventMsg(OpCodes.DEL_CART_ITEM_ERROR, "操作失败"));
 				}
 			}
 		}).start();
 	}
-
+ //从购物车删除 1 购物车项目id 2 user_id
 	private void delCartItem(final String scarid) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				String url = CommonAPI.BASE_URL
-						+ String.format(CommonAPI.URL_DEL_FROM_CART, scarid,
-								ShareUtil.getInstance(mContext).getUserId());
-				AccessNetResultBean bean = NetUtil.getInstance(mContext)
-						.getDataFromNetByGet(url);
+				String url = CommonAPI.BASE_URL + String.format(CommonAPI.URL_DEL_FROM_CART, scarid, ShareUtil.getInstance(mContext).getUserId());
+				AccessNetResultBean bean = NetUtil.getInstance(mContext).getDataFromNetByGet(url);
 				if (bean.getState() == AccessNetState.Success) {
-					TypeMsgBean sBean = new Gson().fromJson(bean.getResult(),
-							TypeMsgBean.class);
+					TypeMsgBean sBean = new Gson().fromJson(bean.getResult(), TypeMsgBean.class);
 					if (sBean.getRESULT_TYPE() == 1) {
-						EventBus.getDefault()
-								.post(new EventMsg(OpCodes.DEL_CART_ITEM_DONE,
-										sBean.getRESULT_CAR_VOLUME()));
+						EventBus.getDefault().post(new EventMsg(OpCodes.DEL_CART_ITEM_DONE, sBean.getRESULT_CAR_VOLUME()));
 					} else {
-						EventBus.getDefault().post(
-								new EventMsg(OpCodes.DEL_CART_ITEM_ERROR, sBean
-										.getRESULT_MSG()));
+						EventBus.getDefault().post(new EventMsg(OpCodes.DEL_CART_ITEM_ERROR, sBean.getRESULT_MSG()));
 					}
 				} else {
-					EventBus.getDefault().post(
-							new EventMsg(OpCodes.DEL_CART_ITEM_ERROR,
-									"删除购物车记录失败"));
+					EventBus.getDefault().post(new EventMsg(OpCodes.DEL_CART_ITEM_ERROR, "删除购物车记录失败"));
 				}
 			}
 		}).start();
 	}
 
 	private void postOrderFromCart() {
-		final String url = CommonAPI.BASE_URL
-				+ String.format(CommonAPI.URL_SUBMIT_ORDER_FROM_CART, ShareUtil
-						.getInstance(mContext).getUserId(),
-						getString(R.string.my_address), "", bean.getCartIds());
+		final String url = CommonAPI.BASE_URL + String.format(CommonAPI.URL_SUBMIT_ORDER_FROM_CART, ShareUtil.getInstance(mContext).getUserId(), getString(R.string.my_address), "", bean.getCartIds());
 		new Thread(new Runnable() {
 			@Override
 			public void run() {

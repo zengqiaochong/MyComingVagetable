@@ -28,8 +28,8 @@ import com.caomei.comingvagetable.CommonData.CommonAPI;
 import com.caomei.comingvagetable.CommonData.OpCodes;
 import com.caomei.comingvagetable.Enum.AccessNetState;
 import com.caomei.comingvagetable.R;
-import com.caomei.comingvagetable.activity.BroswerActivity;
 import com.caomei.comingvagetable.activity.MainActivity;
+import com.caomei.comingvagetable.activity.MyPurseActivity;
 import com.caomei.comingvagetable.activity.ProductDetailActivity;
 import com.caomei.comingvagetable.activity.PromotionActivity;
 import com.caomei.comingvagetable.activity.SearchActivity;
@@ -44,25 +44,33 @@ import com.caomei.comingvagetable.bean.eventbus.EventMsg;
 import com.caomei.comingvagetable.bean.eventbus.UpdateMainDataSetBean;
 import com.caomei.comingvagetable.bean.vegedata.VegeAllBean;
 import com.caomei.comingvagetable.bean.vegedata.VegeAllBeanData;
+import com.caomei.comingvagetable.housekeeper.activity.HouseKeeperActivity;
 import com.caomei.comingvagetable.loadmoregridview.GridViewWithHeaderAndFooter;
 import com.caomei.comingvagetable.refresh.PtrClassicFrameLayout;
 import com.caomei.comingvagetable.refresh.PtrFrameLayout;
 import com.caomei.comingvagetable.refresh.PtrHandler;
+import com.caomei.comingvagetable.takeaway.activity.HomeTakeawayActivity;
+import com.caomei.comingvagetable.util.FinalAsyncHttpClient;
 import com.caomei.comingvagetable.util.ImageUtil;
 import com.caomei.comingvagetable.util.MethodUtil;
 import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
+import com.caomei.comingvagetable.util.ToastUtil;
+import com.caomei.comingvagetable.wxapi.WXEntryActivity;
 import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.minking.imagecycleview.ImageCycleView;
 import com.minking.imagecycleview.PicSlideInfo;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.apache.http.Header;
 
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
 
 public class FragmentMain extends Fragment {
-
 	private Context mContext;
 	private MyGridViewAdapter mAdapter;
 	private ArrayList<VegeAllBeanData> gridDataset;
@@ -94,6 +102,8 @@ public class FragmentMain extends Fragment {
 	private ArrayList<String> picUrls;
 	private LinearLayout searchPanel;
 	private ImageView ivMsg;
+	//分别是小吃街、年货预售、摇奖区、管家商城
+	private TextView main_snack_street, main_spring_festival_goods,main_draw_lottery, main_housekeeper_mall;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -178,8 +188,7 @@ public class FragmentMain extends Fragment {
 		searchPanel.setOnClickListener(mListener);
 		gridView.setAdapter(mAdapter);
 		gridView.setOnItemClickListener(new VegeItemClickListener());
-		ptrFrameLayout = (PtrClassicFrameLayout) mView
-				.findViewById(R.id.refreshView);
+		ptrFrameLayout = (PtrClassicFrameLayout) mView.findViewById(R.id.refreshView);
 		ptrFrameLayout.disableWhenHorizontalMove(true);
 		ptrFrameLayout.setLastUpdateTimeRelateObject(this);
 
@@ -215,6 +224,14 @@ public class FragmentMain extends Fragment {
 			requestDataByCategory(curType);
 		}
 
+		main_snack_street = (TextView) headView.findViewById(R.id.main_snack_street);
+		main_draw_lottery = (TextView) headView.findViewById(R.id.main_draw_lottery);
+		main_housekeeper_mall = (TextView) headView.findViewById(R.id.main_housekeeper_mall);
+		main_spring_festival_goods = (TextView) headView.findViewById(R.id.main_spring_festival_goods);
+		main_spring_festival_goods.setOnClickListener(mListener);
+		main_housekeeper_mall.setOnClickListener(mListener);
+		main_draw_lottery.setOnClickListener(mListener);
+		main_snack_street.setOnClickListener(mListener);
 	}
 
 	private void initLocation() {
@@ -252,42 +269,58 @@ public class FragmentMain extends Fragment {
 		((MainActivity) mContext).mDrawerLayout.closeDrawers();
 	}
 
+	/*主页获取菜品信息*/
 	private void requestDataByCategory(final String id) {
+		String url = String.format(CommonAPI.URL_VEGE_MAIN, ShareUtil.getInstance(mContext).getHomeCommunityID(), 0, 10000,
+				null, id, ShareUtil.getInstance(mContext).getUserId());
+		Log.e("url", "主页获取菜品信息的url: " + url);
+		AsyncHttpClient client = new FinalAsyncHttpClient().getAsyncHttpClient();
+		client.get(url, null, new AsyncHttpResponseHandler() {
+			@Override
+			public void onSuccess(int i, Header[] headers, byte[] bytes) {
+				try {
+					vBean = new Gson().fromJson(new String(bytes), VegeAllBean.class);
+					Log.e("data", new String(bytes));
+					EventBus.getDefault().post(new EventMsg(OpCodes.GET_VEGE_DATA_BY_CATEGORY_DONE, null));
+				} catch (Exception e) {
+					EventBus.getDefault().post(new EventMsg(OpCodes.GET_VEGE_DATA_BY_CATEGORY_ERROR, mContext.getResources().getString(
+							R.string.get_data_error_format)));
+				}
+			}
+
+			@Override
+			public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+				EventBus.getDefault().post(new EventMsg(OpCodes.GET_VEGE_DATA_BY_CATEGORY_ERROR, mContext.getResources().getString(
+						R.string.request_failed)));
+			}
+		});
+
+	}
+
+	/*private void requestDataByCategory(final String id) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				String url = String.format(CommonAPI.URL_VEGE_MAIN, ShareUtil
-						.getInstance(mContext).getHomeCommunityID(), 0, 100000,
+				String url = String.format(CommonAPI.URL_VEGE_MAIN, ShareUtil.getInstance(mContext).getHomeCommunityID(), 0, 100000,
 						null, id, ShareUtil.getInstance(mContext).getUserId());
 				Log.e("url", "主页获取菜品信息的url: " + url);
-				AccessNetResultBean aBean = NetUtil.getInstance(mContext)
-						.getDataFromNetByGet(url);
+				AccessNetResultBean aBean = NetUtil.getInstance(mContext).getDataFromNetByGet(url);
 				if (aBean.getState() == AccessNetState.Success) {
 					try {
-						vBean = new Gson().fromJson(aBean.getResult(),
-								VegeAllBean.class);
+						vBean = new Gson().fromJson(aBean.getResult(), VegeAllBean.class);
 						Log.e("data", aBean.getResult());
-						EventBus.getDefault().post(
-								new EventMsg(
-										OpCodes.GET_VEGE_DATA_BY_CATEGORY_DONE,
-										null));
+						EventBus.getDefault().post(new EventMsg(OpCodes.GET_VEGE_DATA_BY_CATEGORY_DONE, null));
 					} catch (Exception e) {
-						EventBus.getDefault()
-								.post(new EventMsg(
-										OpCodes.GET_VEGE_DATA_BY_CATEGORY_ERROR,
-										mContext.getResources().getString(
+						EventBus.getDefault().post(new EventMsg(OpCodes.GET_VEGE_DATA_BY_CATEGORY_ERROR, mContext.getResources().getString(
 												R.string.get_data_error_format)));
 					}
 				} else {
-					EventBus.getDefault().post(
-							new EventMsg(
-									OpCodes.GET_VEGE_DATA_BY_CATEGORY_ERROR,
-									mContext.getResources().getString(
+					EventBus.getDefault().post(new EventMsg(OpCodes.GET_VEGE_DATA_BY_CATEGORY_ERROR, mContext.getResources().getString(
 											R.string.request_failed)));
 				}
 			}
 		}).start();
-	}
+	}*/
 
 	/**
 	 * 显示定位小区信息的对话框
@@ -485,15 +518,28 @@ public class FragmentMain extends Fragment {
 						R.anim.activity_slide_right_out, false, null);
 				break;
 			case R.id.iv_msg:
-				Bundle bundle=new Bundle();
-				bundle.putString("data", getResources().getString(R.string.cv_tips));
-				bundle.putString("title", "菜来了" +
-						"小贴士");
 				((MainActivity) mContext).startNewActivity(
-						BroswerActivity.class, R.anim.activity_slide_right_in,
-						R.anim.activity_slide_left_out, false, bundle);
+						WXEntryActivity.class, R.anim.activity_slide_right_in,
+						R.anim.activity_slide_left_out, false, null);
+			case R.id.main_housekeeper_mall:
+				if("0".equals(ShareUtil.getInstance(mContext).getHomeCommunityID())){
+					ToastUtil.Show(mContext, "请先选择小区...");
+				}else{
+					Bundle bundle = new Bundle();
+					bundle.putString("community_id", ShareUtil.getInstance(mContext).getHomeCommunityID());
+					((MainActivity) mContext).startNewActivity(
+							HouseKeeperActivity.class, R.anim.activity_slide_right_in,
+							R.anim.activity_slide_left_out, false, bundle);
+				}
+				break;
+			case R.id.main_draw_lottery:
+			case R.id.main_snack_street:
+				ToastUtil.Show(mContext, "正在开发中，敬请期待！");
+				break;
+			case R.id.main_spring_festival_goods:
+				((MainActivity) mContext).startNewActivity(HomeTakeawayActivity.class, R.anim.activity_slide_right_in, R.anim.activity_slide_left_out, false, null);
+				break;
 			default:
-				
 				break;
 			}
 		}
@@ -637,14 +683,21 @@ public class FragmentMain extends Fragment {
 		@Override
 		public void onImageClick(PicSlideInfo info, int position, View imageView) {
 			if(activityEntity != null && activityEntity.data != null && activityEntity.data.size() > position){
-				if(activityEntity.data.get(position).activity_url != null){
-					Bundle intent = new Bundle();
-					intent.putString("link_url", CommonAPI.BASE_URL + activityEntity.data.get(position).activity_url);
-					intent.putString("title", activityEntity.data.get(position).title);
-					((MainActivity) mContext).startNewActivity(
-							PromotionActivity.class,
-							R.anim.activity_slide_left_in,
-							R.anim.activity_slide_right_out, false, intent);
+				if(activityEntity.data.get(position).activity_url != null && !"".equals(activityEntity.data.get(position).activity_url)){
+					if("activity".equals(activityEntity.data.get(position).activity_url)){//跳转支付页面
+						((MainActivity) mContext).startNewActivity(
+								MyPurseActivity.class,
+								R.anim.activity_slide_right_in,
+								R.anim.activity_slide_left_out, false, null);
+					}else{
+						Bundle intent = new Bundle();
+						intent.putString("link_url", CommonAPI.BASE_URL + activityEntity.data.get(position).activity_url);
+						intent.putString("title", activityEntity.data.get(position).title);
+						((MainActivity) mContext).startNewActivity(
+								PromotionActivity.class,
+								R.anim.activity_slide_right_in,
+								R.anim.activity_slide_left_out, false, intent);
+					}
 				}
 			}
 		}

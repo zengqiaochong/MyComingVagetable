@@ -47,8 +47,6 @@ public class OrderConfirmAdapter extends BaseAdapter{
 
 	@Override
 	public View getView(int pos, View convertView, ViewGroup arg2) {
-		 
-
 		ViewHolder holder = null;
 		if (convertView == null) {
 			holder = new ViewHolder();

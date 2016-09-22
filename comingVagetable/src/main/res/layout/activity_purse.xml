@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_top_banner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/white" >
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -39,27 +39,62 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/charge_bg" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/panel_charge_money"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/purse_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@drawable/charge_bg" />
+
+            <RelativeLayout
+                android:id="@+id/purse_activity_re"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/purse_icon"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/purse_activity_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="活动细则："
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/purse_activity_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/purse_activity_title"
+                    android:layout_toRightOf="@+id/purse_activity_title"
+                    android:textSize="14dp" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
 
         <RelativeLayout
             android:id="@+id/panel_charge_madun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_corner_button_yellow_bg"
-            android:clickable="true"
-            android:gravity="center" 
-            android:padding="10dp" 
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_alignParentBottom="true" 
-            android:layout_marginBottom="20dp">
+            android:background="@drawable/round_corner_button_yellow_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/iv_purse"
@@ -69,6 +104,7 @@
                 android:layout_marginRight="5dp"
                 android:src="@drawable/madun_icon"
                 android:tint="#FFFFFF" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,15 +117,15 @@
         <RelativeLayout
             android:id="@+id/panel_charge_money"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_above="@id/panel_charge_madun"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/round_corner_button_green_bg"
             android:clickable="true"
             android:gravity="center"
-            android:padding="10dp" 
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_above="@id/panel_charge_madun"
-            android:layout_marginBottom="10dp" >
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/iv_purse2"
@@ -108,7 +144,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </RelativeLayout>
- 
+
     </RelativeLayout>
 
 </LinearLayout>

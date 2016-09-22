@@ -1,19 +1,12 @@
 package com.caomei.comingvagetable.fragment;
 
-import java.io.File;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,21 +21,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.CommonData.CommonAPI;
 import com.caomei.comingvagetable.CommonData.OpCodes;
 import com.caomei.comingvagetable.Enum.AccessNetState;
+import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.activity.AddressManageActivity;
-import com.caomei.comingvagetable.activity.MyPurseActivity;
+import com.caomei.comingvagetable.activity.BroswerActivity;
 import com.caomei.comingvagetable.activity.MainActivity;
+import com.caomei.comingvagetable.activity.MyDiscountActivity;
+import com.caomei.comingvagetable.activity.MyPurseActivity;
 import com.caomei.comingvagetable.activity.SettingActivity;
 import com.caomei.comingvagetable.activity.UserInfoActivity;
 import com.caomei.comingvagetable.bean.AccessNetResultBean;
-import com.caomei.comingvagetable.bean.CheckUpdateBean;
 import com.caomei.comingvagetable.bean.UserInfoBean;
 import com.caomei.comingvagetable.bean.eventbus.EventMsg;
-import com.caomei.comingvagetable.service.DownloadApkService;
-import com.caomei.comingvagetable.util.AppUtil;
 import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
 import com.google.gson.Gson;
@@ -50,10 +42,12 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
+import java.util.List;
+import java.util.Random;
+
 import de.greenrobot.event.EventBus;
 
 public class FragmentUser extends Fragment {
-
 	private Context mContext;
 	private View mView;
 	private RelativeLayout panelAddr;
@@ -63,12 +57,15 @@ public class FragmentUser extends Fragment {
 	private RelativeLayout panelMoney;
 	private RelativeLayout panelContact;
 	private RelativeLayout panelSetting;
+	private RelativeLayout rl_panel_discount;//优惠券
+	private RelativeLayout rl_panel_share;//分享
 	private UserInfoBean ucInfoBbean;
 	private TextView tvMoney;
 	private TextView tvMadun;
 	private TextView tvLevel;
 	private TextView tvUserNickName;
 	private TextView tvJifen;
+	private List<UserInfoBean.QQNumbers> numbers;//在线QQ号码
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +89,7 @@ public class FragmentUser extends Fragment {
 	}
 
 	private void setView() {
+		rl_panel_share = (RelativeLayout) mView.findViewById(R.id.rl_panel_share);
 		panelAddr = (RelativeLayout) mView.findViewById(R.id.panel_my_addr);
 		ivUserHead = (ImageView) mView.findViewById(R.id.iv_user_header);
 		panelUserInfo = (RelativeLayout) mView
@@ -107,6 +105,7 @@ public class FragmentUser extends Fragment {
 		tvLevel = (TextView) mView.findViewById(R.id.tv_level);
 		tvJifen = (TextView) mView.findViewById(R.id.tv_jifen);
 		tvUserNickName = (TextView) mView.findViewById(R.id.tv_user_nicename);
+		rl_panel_discount = (RelativeLayout) mView.findViewById(R.id.rl_panel_discount);
 	}
 
 	private void setData() {
@@ -115,6 +114,8 @@ public class FragmentUser extends Fragment {
 		panelContact.setOnClickListener(mListener);
 		panelMoney.setOnClickListener(mListener);
 		panelSetting.setOnClickListener(mListener);
+		rl_panel_discount.setOnClickListener(mListener);
+		rl_panel_share.setOnClickListener(mListener);
 	}
 
 	@Override
@@ -159,6 +160,7 @@ public class FragmentUser extends Fragment {
 		switch (msg.getFlag()) {
 		case OpCodes.GET_USER_INFO_DONE:
 			ucInfoBbean = (UserInfoBean) msg.getData();
+			numbers = ucInfoBbean.qq_numbers;
 			InitUCView();
 			break;
 
@@ -279,6 +281,20 @@ public class FragmentUser extends Fragment {
 						SettingActivity.class, R.anim.activity_slide_right_in,
 						R.anim.activity_slide_left_out, false, null);
 				break;
+			case R.id.rl_panel_discount:
+				((MainActivity) mContext).startNewActivity(
+						MyDiscountActivity.class, R.anim.activity_slide_right_in,
+						R.anim.activity_slide_left_out, false, null);
+				break;
+			case R.id.rl_panel_share:
+				Bundle bundle2=new Bundle();
+				bundle2.putString("data", getResources().getString(R.string.cv_tips));
+				bundle2.putString("title", "菜来了" +
+						"小贴士");
+				((MainActivity) mContext).startNewActivity(
+						BroswerActivity.class, R.anim.activity_slide_right_in,
+						R.anim.activity_slide_left_out, false, bundle2);
+				break;
 			default:
 				Toast.makeText(mContext, "暂无此功能", Toast.LENGTH_SHORT).show();
 				break;
@@ -307,19 +323,53 @@ public class FragmentUser extends Fragment {
 	 * @return 返回true表示呼起手Q成功，返回fals表示呼起失败
 	 ******************/
 	public boolean joinQQGroup(String key) {
-		Intent intent = new Intent();
+		String number = "206531173";
+		if(numbers != null){
+			Random random = new Random();
+			number = numbers.get(random.nextInt(numbers.size())).qq_number;
+		}
+		/**在线客服**/
+		String str = "";
+		//判断QQ是否安装（“*”是需要联系QQ号）
+		if (isQQClientAvailable(getActivity())) {
+			//安装了QQ会直接调用QQ，打开手机QQ进行会话
+			str = "mqqwpa://im/chat?chat_type=wpa&uin=" + number + "&version=1&src_type=web&web_src=oicqzone.com";
+		} else {
+			//没有安装QQ会展示网页
+			str = "http://wpa.qq.com/msgrd?v=3&uin=" + number + "&site=qq&menu=yes";
+		}
+		Uri uri = Uri.parse(str);
+		Intent it = new Intent(Intent.ACTION_VIEW, uri);
+		startActivity(it);
+		return true;
+	}
+
+		/*Intent intent = new Intent();
 		intent.setData(Uri
 				.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D"
-						+ key));
+						+ key));*/
 		// 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面
 		// //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-		try {
+		/*try {
 			startActivity(intent);
 			return true;
 		} catch (Exception e) {
 			// 未安装手Q或安装的版本不支持
 			return false;
+		}*/
+
+
+	public  static  boolean  isQQClientAvailable(Context context){
+		final PackageManager packageManager = context.getPackageManager();
+		List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+		if (pinfo != null) {
+			for (int i = 0; i < pinfo.size(); i++) {
+				String pn = pinfo.get(i).packageName; if (pn.equals("com.tencent.mobileqq")) {
+					return true;
+				}
+			}
 		}
+		return false;
 	}
 
 	@Override

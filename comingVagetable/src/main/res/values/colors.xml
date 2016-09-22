@@ -5,7 +5,10 @@
     <color name="white_alpha">#99FFFFFF</color>
     <color name="black">#000000</color>
     <color name="black_light">#99000000</color>
-    
+    <color name="black_alpha">#55000000</color>
+    <color name="Light_red">#fe384f</color>
+
+
     <color name="province_line_border">#C7C7C7</color>
     <color name="red">#FF0000</color>
     <color name="red_point">#EE3B3B</color>
@@ -49,4 +52,6 @@
 
     <color name="green">#4dc060</color>
     <color name="Dark_green">#4dc060</color>
+
+    <color name="transparent_background">#801a1a1a</color>
 </resources>

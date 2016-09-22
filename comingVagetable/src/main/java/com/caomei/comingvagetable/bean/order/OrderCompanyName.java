@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class OrderCompanyName {
     public List<MCompany> data;
+    public String deliverFree;
 
 
     public class MCompany{

@@ -1,8 +1,5 @@
 package com.caomei.comingvagetable.activity;
 
-import java.util.ArrayList;
-
-import u.aly.dp;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -11,20 +8,16 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.CommonData.CommonAPI;
 import com.caomei.comingvagetable.CommonData.OpCodes;
 import com.caomei.comingvagetable.Enum.AccessNetState;
+import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.adapter.AddressListAdapter;
 import com.caomei.comingvagetable.bean.AccessNetResultBean;
 import com.caomei.comingvagetable.bean.AddressBean;
@@ -34,6 +27,8 @@ import com.caomei.comingvagetable.bean.eventbus.EventMsg;
 import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
 
@@ -214,8 +209,7 @@ public class AddressManageActivity extends BaseActivity {
 				}
 				break;
 			case R.id.ll_addr_panel:
-				EventBus.getDefault().post(
-						new EventMsg(OpCodes.CHANGE_USER_ADDRESS, v.getTag()));
+				EventBus.getDefault().post(new EventMsg(OpCodes.CHANGE_USER_ADDRESS, v.getTag()));
 				onBackPressed();
 				break;
 			case R.id.iv_del_addr:

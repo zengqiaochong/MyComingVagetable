@@ -13,10 +13,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.CommonData.CommonAPI;
 import com.caomei.comingvagetable.CommonData.OpCodes;
 import com.caomei.comingvagetable.Enum.AccessNetState;
+import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.adapter.OrderInfoAdapter;
 import com.caomei.comingvagetable.bean.AccessNetResultBean;
 import com.caomei.comingvagetable.bean.TypeMsgBean;
@@ -25,12 +25,13 @@ import com.caomei.comingvagetable.bean.order.OrderData;
 import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
 import com.caomei.comingvagetable.util.ToastUtil;
-import com.caomei.comingvagetable.wxapi.WXPayEntryActivity;
 import com.google.gson.Gson;
 
-import dalvik.bytecode.Opcodes;
 import de.greenrobot.event.EventBus;
 
+/*
+* 订单详情
+* */
 public class OrderInfoActivity extends BaseActivity{
 	private ListView lvOrderInfo;
 	private ImageView ivBack;
@@ -50,6 +51,12 @@ public class OrderInfoActivity extends BaseActivity{
 	private RatingBar rbFuwu;
 	private RatingBar rbCaipin;
 	private LinearLayout llEva;
+	private LinearLayout lv_info2;//活动linearlayout
+	private LinearLayout lv_info3, lv_info4;
+	private TextView dis_name, dis_price;//活动名字，活动价格
+	private TextView dis_name3, dis_price3;//活动名字，活动价格
+	private TextView dis_name4;//优惠券
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -61,6 +68,14 @@ public class OrderInfoActivity extends BaseActivity{
 	}
 
 	private void initView() {
+		dis_name = (TextView) findViewById(R.id.order_dis_name);
+		dis_price = (TextView) findViewById(R.id.order_dis_price);
+		dis_name3 = (TextView) findViewById(R.id.order_dis_name3);
+		dis_price3 = (TextView) findViewById(R.id.order_dis_price3);
+		dis_name4 = (TextView) findViewById(R.id.order_dis_name4);
+		lv_info2 = (LinearLayout) findViewById(R.id.lv_info2);
+		lv_info3 = (LinearLayout) findViewById(R.id.lv_info3);
+		lv_info4 = (LinearLayout) findViewById(R.id.lv_info4);
 		tvWay = (TextView) findViewById(R.id.tv_way);
 		tvUserName=(TextView)findViewById(R.id.tv_user_name);
 		tvAddress=(TextView)findViewById(R.id.tv_address);
@@ -83,7 +98,24 @@ public class OrderInfoActivity extends BaseActivity{
 		mAdapter=new OrderInfoAdapter(mContext, orderInfo.getVegeInfo());
 		lvOrderInfo.setAdapter(mAdapter);
 		mAdapter.notifyDataSetChanged();
-		
+		if(orderInfo.vegeInfo1 != null && orderInfo.vegeInfo1.size() > 0){
+			lv_info2.setVisibility(View.VISIBLE);
+			if (orderInfo.vegeInfo1!=null&& orderInfo.vegeInfo1.size()!=0){
+				dis_name.setText(orderInfo.vegeInfo1.get(0).mealName);
+				dis_price.setText(orderInfo.vegeInfo1.get(0).mealPrice + "元");
+				if(orderInfo.vegeInfo1.size() > 1){
+					lv_info3.setVisibility(View.VISIBLE);
+					dis_name3.setText(orderInfo.vegeInfo1.get(1).mealName);
+					dis_price3.setText(orderInfo.vegeInfo1.get(1).mealPrice + "元");
+				}
+			}
+		}
+		if(orderInfo.discountMoney != null && !"".equals(orderInfo.discountMoney) && !"0".equals(orderInfo.discountMoney)){
+			lv_info4.setVisibility(View.VISIBLE);
+			dis_name4.setText(orderInfo.discountName + ":" + orderInfo.discountMoney + "元");
+		}else{
+			lv_info4.setVisibility(View.GONE);
+		}
 		tvUserName.setText("收件人：" + (orderInfo.getAddress().getUsername() == null ? orderInfo.getAddress().getGuestname() : orderInfo.getAddress().getUsername()) + "  联系电话：" + orderInfo.getAddress().getPhone());
 		tvAddress.setText("配送地址：" + orderInfo.getAddress().getSmallAddress());
 		String way = "";
@@ -180,10 +212,22 @@ public class OrderInfoActivity extends BaseActivity{
 			});
 			break;
 		case 4:
-			btAction1.setText("评价");
+			btAction1.setText("投诉");
+			btAction2.setText("评价");
 			llEva.setVisibility(View.VISIBLE);
-			btAction2.setVisibility(View.GONE);
-			btAction1.setOnClickListener(new OnClickListener() { 
+			btAction1.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					//requestEvaluate(orderInfo.getOrder_id(),rbMaijia.getRating(),rbFuwu.getRating(),rbCaipin.getRating());
+					Bundle bundle = new Bundle();
+					bundle.putString("order_id", orderInfo.getOrder_id());
+					OrderInfoActivity.this.startNewActivity(
+							ComplaintActivity.class,
+							R.anim.activity_slide_right_in,
+							R.anim.activity_slide_left_out, false, bundle);
+				}
+			});
+			btAction2.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View arg0) { 

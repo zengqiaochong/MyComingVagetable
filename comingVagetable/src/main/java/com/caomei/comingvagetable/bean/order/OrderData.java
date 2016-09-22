@@ -1,11 +1,11 @@
 package com.caomei.comingvagetable.bean.order;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 import android.text.TextUtils;
 
 import com.caomei.comingvagetable.bean.AddressData;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 public class OrderData implements Serializable{
 	private static final long serialVersionUID = -8275789382653707399L;
@@ -19,9 +19,19 @@ public class OrderData implements Serializable{
 	private String deliver;
 	private String deliver_id;
 	public int deliverType;
-	
+	public String discountName;
+	public String discountMoney;
+
 	private AddressData address;
 	private ArrayList<OrderVegeInfo> vegeInfo;
+
+	public ArrayList<OrderDiscountInfo> vegeInfo1;
+
+	public class OrderDiscountInfo implements Serializable{
+		public String meal_id;
+		public String mealName;
+		public String mealPrice;
+	}
 	 
 	public String getOrder_id() {
 		if(TextUtils.isEmpty(order_id)){

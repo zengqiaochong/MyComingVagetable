@@ -1,7 +1,5 @@
 package com.caomei.comingvagetable.CommonData;
 
-import com.google.gson.annotations.Until;
-
 /**
  * 通用的接口地址
  * 
@@ -13,9 +11,9 @@ public class CommonAPI {
 	/**
 	 * 获取数据的基础URL 
 	 */
-//	public static String BASE_URL = "http://www.happycopy.cn:8080/zouma_t1/";
+/*	public static String BASE_URL = "http://www.happycopy.cn:8080/zouma_t1/";*/
 //	public static String BASE_URL = "http://www.happycopy.cn:8080/zouma/";
-	public static String BASE_URL = "http://192.168.1.110:8080/zouma/";
+	public static String BASE_URL = "http://192.168.1.107:8080/zouma/";
 
 	/**
 	 * <pre>
@@ -101,7 +99,7 @@ public class CommonAPI {
 	/**
 	 * 用户注册接口 1 username 2 password
 	 */
-	public static String URL_REGIST = "Reg_createGuest?username=%s&password=%s&user_id=-1&code=%s";
+	public static String URL_REGIST = "Reg_createGuest?username=%s&password=%s&user_id=-1&code=%s&smsCode=%s";
 
 	/**
 	 * 用户登录接口 1 username 2 password
@@ -109,9 +107,9 @@ public class CommonAPI {
 	public static String URL_LOGIN = "Login_login_mb?username=%s&password=%s&user_id=-1";
 
 	/**
-	 * 从购物车提交订单的接口 1 用户id 2 收货地址id 3 备注 4 购物车订单id 5 user_id
+	 * 从购物车提交订单的接口 1 用户id 2 收货地址id 3 备注 4 购物车订单id 5 user_id 6  7  8 优惠券id
 	 */
-	public static String URL_SUBMIT_ORDER_FROM_CART = "Order_submitOrderFromCar?guset_id=%s&address_id=%s&remark=%s&carids=%s&user_id=%s&deliver_id=%s&deliverType=%s";
+	public static String URL_SUBMIT_ORDER_FROM_CART = "Order_submitOrderFromCar?guset_id=%s&address_id=%s&remark=%s&carids=%s&user_id=%s&deliver_id=%s&deliverType=%s&discount_ids=%s&meal_ids=%s";
 
 	/**
 	 * 获取默认收货地址 1 user_idַ
@@ -424,4 +422,108 @@ public class CommonAPI {
     *
     * */
 	public static String URL_BACK_PASSWORD = "User_retrievePasswordForApp?password=%s&user_id=%s&phone=%s&roleType=6&smsCode=%s";
+
+	/*获取优惠券接口*/
+	public static String URL_MY_DISCOUNT = "User_getMyDiscount?user_id=%s";
+
+	/*投诉接口
+	* order_id  订单编号
+	* complainContent 投诉标题
+	* complainDetail 投诉内容
+	* user_id 用户id
+	* */
+	public static String  URL_COMPLAIN_ORDER= "Complain_complainOrder?order_id=%s&complainContent=%s&complainDetail=%s&user_id=%s";
+
+	/*活动细则
+	* user_id 用户id
+	* */
+	public static String  URL_COMPLAIN_ACTIVITY= "Activity_getRecharge?user_id=%s";
+
+	/*投诉接口
+	* order_id 订单id
+	* complainContent 投诉标题
+	* complainDetail 投诉详情
+	* urser_id 用户id
+	* */
+	public static String URL_MY_COMPLAIN = "Complain_complainOrder?order_id=%s&complainContent=%s&complainDetail=%s&user_id=%s";
+
+	/*获取小区内管家所有商品的接口
+	* community_id 小区id
+	* provider_id 商家id
+	* */
+	public static String URL_MY_GOODSPROVIDE = "GoodsProvide_getVegeProvidesByPage?community_id=%s&provider_id=%s";
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/*获取快餐外卖商品接口
+	* community_id 小区id
+	* vegeType_id 菜品类型id
+	* */
+	public static String URL_TASE_OUT_FOOD_COMM_ = "GoodsProvide_getVegeProvidesByPage?" +
+			"user_id=%s&"+
+			"community_id=%s&" +
+			"vegeType_id=%s&"+
+			"iDisplayStart=%s&"+
+			"iDisplayLength=%s";
+
+
+	/*获取快餐外卖商类型品接口*/
+	public static  String URL_GET_COMM_TYPE="GoodsProvide_getGoodsType?"
+			+"type=%s&"
+			+"user_id=%s";
+
+	/*查看外卖购物车*/
+	public static  String URL_GET_SHOW_CART="ShopCar_getShopCarsJsonByPage?" +
+			"iDisplayStart=%d&" +
+			"iDisplayLength=%d&" +
+			"sEcho=%d&" +
+			"user_id=%s";
+
+	/*加入外卖购物车*/
+	public static  String URL_ADD_SHOW_CART="ShopCar_addIntoShopCarForGoods?"
+			+"vege_id=%s&"+
+			"buyAmount=%s&"
+			+"user_id=%s";
+
+
+   /*提交外卖订单
+   *   user_id 用户id
+   *  address_id 地址id
+   *  remark     备注
+   *  carids    购物车id
+   *  guset_id    用户id
+   *  deliver_id   小区id
+   *  deliverType  订单类型 1送货上门
+   *
+   * */
+   public static  String URL_SUBMIT_WAI_ORDER="GoodsOrder_submitOrder?" +
+		   "user_id=%s&"+
+		   "address_id=%s&"+
+		   "remark=%s&"+
+		   "carids=%s&"+
+		   "guset_id=%s&"+
+		   "deliver_id=%s&"+
+		   "deliverType=%s";
+
+	/*获取外卖商家列表（一个小区内 小区管家列表）*/
+	public static  String URL_DELIVER_LIST="GoodsProvide_getDeliverByCommunity?"
+			+"community_id=%s&"
+			+"user_id=%s";
+
+	/*获取送餐时间*/
+	public static  String URL_TIME_LIST="Order_choseArriveTime?"
+			+"user_id=%s";
+
+
+	/*获取用户订单（小区管家商城、外卖、订单）*/
+	public static  String URL_ORDER_LIST="GoodsOrder_getOrdersJsonByPage?"+
+	        "user_id=%s&"+
+			"sEcho=%s&"+
+			"time=%s&"+
+			"status=%s&"+
+			"iDisplayStart=%s&"+
+			"iDisplayLength=%s";
 }

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.caomei.comingvagetable.R;
 
 public class BroswerActivity extends BaseActivity {
-
 	private WebView webView;
 	private ImageView ivBack;
 	private TextView tvTitle;
@@ -50,13 +49,13 @@ public class BroswerActivity extends BaseActivity {
 		super.onDestroy();
 	}
 
-	@Override
+	/*@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
 		finish();
 		overridePendingTransition(R.anim.slide_in_from_top,
 				R.anim.slide_out_to_bottom);
-	}
+	}*/
 
 }

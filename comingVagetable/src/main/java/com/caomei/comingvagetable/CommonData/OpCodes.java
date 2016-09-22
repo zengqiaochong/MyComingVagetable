@@ -180,5 +180,18 @@ public class OpCodes {
 
 	public static final int GET_ACTIVYT_DONE = 12357;
 	public static final int GET_ACTIVYT_ERROR = 12358;
-	
+
+	/*获取外卖购物车成功*/
+	public static final int GET_WAI_CART_SUCCESS = 12359;
+	//获取外卖结算页购买商品列表成功
+	public static final int GET_WAI_COMM_LIST_SUCCESS = 12360;
+
+	//获取外卖结算页购买商品列表成功
+	public static final int GET_WAI__DELIVER_LIST_SUCCESS = 12361;
+
+	//获取外卖送餐时间成功
+	public static final int GET_WAI_TIME_SUCCESS = 12362;
+
+	//获取外卖送订单成功
+	public static final int GET_WAI_ORDER_SUCCESS = 12363;
 }

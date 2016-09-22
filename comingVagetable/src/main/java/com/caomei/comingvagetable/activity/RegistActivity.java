@@ -97,8 +97,9 @@ public class RegistActivity extends BaseActivity {
 			case R.id.bt_regist:
 				pDialog.show();
 				if (CheckAll()) {
-					String code = etCode.getEditableText().toString();
-					CheckCodeResult(phoneNum, code);
+					requestForRegist();
+					//String code = etCode.getEditableText().toString();
+					//CheckCodeResult(phoneNum, code);
 				}else{
 					pDialog.dismiss();
 				}
@@ -223,7 +224,6 @@ public class RegistActivity extends BaseActivity {
 			break;
 			
 		case OpCodes.CHECK_SMS_CODE_SUCCESS:
-		 
 			requestForRegist(); 
 			break;
 		case OpCodes.REGIST_SUCCESS:
@@ -243,7 +243,7 @@ public class RegistActivity extends BaseActivity {
 		String uName = etPhoneNum.getEditableText().toString();
 		String pwd = etPwd.getEditableText().toString();
 		final String url = CommonAPI.BASE_URL
-				+ String.format(CommonAPI.URL_REGIST, uName, pwd, et_recommend_confirm.getEditableText().toString());
+				+ String.format(CommonAPI.URL_REGIST, uName, pwd, et_recommend_confirm.getEditableText().toString(), etCode.getEditableText().toString());
 
 		System.out.println("url========" + url);
 		new Thread(new Runnable() {

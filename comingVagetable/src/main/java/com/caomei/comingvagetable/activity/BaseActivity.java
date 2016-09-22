@@ -1,7 +1,5 @@
 package com.caomei.comingvagetable.activity;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.Service;
@@ -10,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.view.WindowManager;
 
 import com.caomei.comingvagetable.R;
 import com.nostra13.universalimageloader.cache.disc.impl.LimitedAgeDiskCache;
@@ -21,6 +18,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.umeng.analytics.MobclickAgent;
+
+import java.io.File;
+
+import de.greenrobot.event.EventBus;
 
 public class BaseActivity extends FragmentActivity {
 
@@ -35,7 +36,6 @@ public class BaseActivity extends FragmentActivity {
 //				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
 		mContext = this;
-
 		pDialog = new ProgressDialog(this);
 		pDialog.setIcon(getResources().getDrawable(R.drawable.icon));
 		pDialog.setMessage(getString(R.string.loading));
@@ -142,6 +142,7 @@ public class BaseActivity extends FragmentActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		EventBus.getDefault().unregister(this);
 	}
 
 	@Override

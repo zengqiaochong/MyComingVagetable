@@ -1,12 +1,8 @@
 package com.caomei.comingvagetable.activity;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,22 +11,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.CommonData.CommonAPI;
-import com.caomei.comingvagetable.CommonData.OpCodes;
-import com.caomei.comingvagetable.Enum.AccessNetState;
-import com.caomei.comingvagetable.bean.AccessNetResultBean;
+import com.caomei.comingvagetable.R;
 import com.caomei.comingvagetable.bean.TypeMsgBean;
-import com.caomei.comingvagetable.bean.eventbus.EventMsg;
 import com.caomei.comingvagetable.util.MethodUtil;
-import com.caomei.comingvagetable.util.NetUtil;
 import com.caomei.comingvagetable.util.ShareUtil;
+import com.caomei.comingvagetable.util.Utils;
 import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
 
-import de.greenrobot.event.EventBus;
+import org.apache.http.Header;
+import org.apache.http.cookie.Cookie;
+
+import java.util.List;
 
 public class LoginActivity extends BaseActivity {
-
 	private TextView tvRegist;
 	private TextView tvForgetPwd;
 	private CommonListener mListener;
@@ -42,10 +39,8 @@ public class LoginActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		EventBus.getDefault().register(mContext);
 		InitView();
 		InitData();
 		pDialog = new ProgressDialog(this);
@@ -83,7 +78,6 @@ public class LoginActivity extends BaseActivity {
 						R.anim.activity_slide_left_out, false, null);
 				break;
 			case R.id.tv_forget_pwd:
-				//Toast.makeText(mContext, "暂无此功能", Toast.LENGTH_SHORT).show();
 				startNewActivity(Forgetpassword.class, R.anim.activity_slide_right_in, R.anim.activity_slide_left_out, true, null);
 				break;
 			case R.id.bt_login:
@@ -117,82 +111,69 @@ public class LoginActivity extends BaseActivity {
 			return false;
 		}
 	}
- 
+
+	/*登录请求*/
 	private void LoginRequest() {
-		final String url = CommonAPI.BASE_URL
-				+ String.format(CommonAPI.URL_LOGIN, etPhoneNum
-						.getEditableText().toString(), etPassword
-						.getEditableText().toString());
-
-		new Thread(new Runnable() {
+		final String url = CommonAPI.BASE_URL + String.format(CommonAPI.URL_LOGIN, etPhoneNum.getEditableText().toString(), etPassword.getEditableText().toString());
+		AsyncHttpClient client = new AsyncHttpClient();
+		saveCookie(client);//Cookie自动保存在SharedPreferences
+		client.get(url, null, new AsyncHttpResponseHandler() {
 			@Override
-			public void run() {
-				AccessNetResultBean bean = NetUtil.getInstance(mContext)
-						.getDataFromNetByGet(url);
-				if (bean.getState() == AccessNetState.Success) {
-					TypeMsgBean mBean = new Gson().fromJson(bean.getResult(),
-							TypeMsgBean.class);
-					if (mBean.getRESULT_TYPE() == 1) {
-
-						ShareUtil.getInstance(mContext).setUserId(
-								mBean.getRESULT_USER_ID());
-						EventBus.getDefault().post(
-								new EventMsg(OpCodes.LOGIN_SUCCESS, null));
-					} else {
-						EventBus.getDefault().post(
-								new EventMsg(OpCodes.LOGIN_FAILED, mBean
-										.getRESULT_MSG()));
-					}
+			public void onSuccess(int i, Header[] headers, byte[] bytes) {
+				TypeMsgBean mBean = new Gson().fromJson(new String(bytes), TypeMsgBean.class);
+				if (mBean.getRESULT_TYPE() == 1) {
+					ShareUtil.getInstance(mContext).setUserId(mBean.getRESULT_USER_ID());
+					ShareUtil.getInstance(mContext).setIsLogin(true);
+					ShareUtil.getInstance(mContext).setUserName(etPhoneNum.getEditableText().toString());
+					try {
+						pDialog.dismiss();
+					} catch (Exception e) {}
+					Toast.makeText(mContext, "登录成功", Toast.LENGTH_SHORT).show();
+					Utils.setCookies(getCookie());
+					finish();
 				} else {
-					EventBus.getDefault().post(
-							new EventMsg(OpCodes.LOGIN_FAILED, "登录请求失败"));
+					loginfailed(mBean.getRESULT_MSG());
 				}
 			}
-		}).start();
+
+			@Override
+			public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+				loginfailed("登录请求失败");
+			}
+		});
 
 	}
 
-	public void onEventMainThread(EventMsg Msg) {
-		switch (Msg.getFlag()) {
-		case OpCodes.LOGIN_SUCCESS:
-			Log.e("userid", "userid "
-					+ ShareUtil.getInstance(mContext).getUserId());
-			ShareUtil.getInstance(mContext).setIsLogin(true);
-			ShareUtil.getInstance(mContext).setUserName(
-					etPhoneNum.getEditableText().toString());
-			try {
-				pDialog.dismiss();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			Toast.makeText(mContext, "登录成功", Toast.LENGTH_SHORT).show();
-			finish();
-			break;
-		case OpCodes.LOGIN_FAILED:
-			try {
-				pDialog.dismiss();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			Toast.makeText(mContext, Msg.getData().toString(),
-					Toast.LENGTH_SHORT).show();
-			etPassword.setText("");
-			break;
-		default:
-			break;
-		}
+	/*登录失败*/
+	private void loginfailed(String msg){
+		try {
+			pDialog.dismiss();
+		} catch (Exception e) {}
+		Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+		etPassword.setText("");
+	}
+
+	/*保存Cookie到SharedPreferences中*/
+	private void saveCookie(AsyncHttpClient client) {
+		PersistentCookieStore cookieStore = new PersistentCookieStore(this);
+		client.setCookieStore(cookieStore);
+	}
+
+	/*获取Cookie*/
+	private List<Cookie> getCookie(){
+		PersistentCookieStore cookieStore = new PersistentCookieStore(LoginActivity.this);
+		List<Cookie> cookies = cookieStore.getCookies();
+		return cookies;
 	}
 
 	@Override
 	public void onBackPressed() {
 		finish();
-		overridePendingTransition(R.anim.activity_slide_left_in,
-				R.anim.activity_slide_right_out);
+		overridePendingTransition(R.anim.activity_slide_left_in, R.anim.activity_slide_right_out);
 	}
 
 	@Override
 	protected void onDestroy() {
-		EventBus.getDefault().unregister(this);
 		super.onDestroy();
 	}
 

@@ -78,10 +78,10 @@ public class ProductDetailActivity extends BaseActivity {
 	private Button btDone;
 	private LinearLayout llTotalPrice;
 
+
 	private String vegeId;
 	private Context mContext;
 	private CommonListener mListener;
-
 	private ProgressDialog pDialog;
 	private VegeInfoBean vBean;
 	private ArrayList<PicSlideInfo> infos;
@@ -439,6 +439,8 @@ public class ProductDetailActivity extends BaseActivity {
 			}
 			initSlideView();
 
+			tvProviderChannel.setText("供应渠道：" + bean.provider);
+			tvVolume.setText("重量：≈" + bean.perUnitWeight  + "kg/" + bean.getUnit());
 			tvProductName.setText(bean.getVegeName());
 			//tvProductUnit.setText("/" + bean.getUnit());
 			//tvProductDetails.setText(bean.getRemark());

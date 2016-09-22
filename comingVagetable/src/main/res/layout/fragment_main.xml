@@ -30,7 +30,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/iv_msg"/>
+            android:src="@drawable/iv_share"/>
 
         <LinearLayout
             android:id="@+id/search_panel"
